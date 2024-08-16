@@ -12,6 +12,13 @@ LTexture::~LTexture() {
     Free();
 }
 
+/**
+ * Loads texture from received file path
+ * 
+ * \param renderer the rendering context
+ * \param path image file path
+ * \return true on successful texture load, false on failure
+ */
 bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
     // Free previously held texture
     Free();
@@ -42,8 +49,16 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
     return texture;
 }
 
+/**
+ * Sets rendering area at given (x, y) coordinate, renders texture to screen
+ * 
+ * \param renderer the rendering context
+ * \param x the x coordinate of the top left corner
+ * \param y the y coordinate of the top left corner
+ */
 void LTexture::Render(SDL_Renderer* renderer, int x, int y) {
-
+    SDL_Rect renderArea = {x, y, width, height};
+    SDL_RenderCopy(renderer, texture, NULL, &renderArea); 
 }
 
 int LTexture::GetWidth() {
