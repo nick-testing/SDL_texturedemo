@@ -20,6 +20,9 @@ private:
     SDL_Renderer* renderer;
     LTexture backgroundTexture;
     LTexture foregroundTexture;
+
+    // Scene sprites
+    LTexture spriteClipTexture;
     
     bool Init();
     bool LoadMedia();
