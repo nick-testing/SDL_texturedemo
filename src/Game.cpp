@@ -44,3 +44,16 @@ bool Game::Init() {
 
     return success;
 }
+
+void Game::Close() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    renderer = nullptr;
+    window = nullptr;
+
+    backgroundTexture.Free();
+    foregroundTexture.Free();
+
+    SDL_Quit();
+    IMG_Quit();
+}
