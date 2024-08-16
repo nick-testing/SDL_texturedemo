@@ -11,8 +11,6 @@ class LTexture {
 
         bool LoadFromFile(const char*);
 
-        void Free();
-
         // Render texture at a given (x,y) point
         void Render(int, int);
 
@@ -25,6 +23,9 @@ class LTexture {
         // Image dimensions
         int width;
         int height;
+
+        // Deallocate memory
+        void Free();
 };
 
 #endif
