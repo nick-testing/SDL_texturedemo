@@ -2,6 +2,7 @@
 #define LTEXTURE_H
 
 typedef struct SDL_Texture SDL_Texture;
+typedef struct SDL_Renderer SDL_Renderer;
 
 class LTexture {
     public:
