@@ -1,6 +1,10 @@
 #include "LTexture.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <iostream>
+
+#define COLOR_CHANNEL_MAX (0xFF)
+#define COLOR_CHANNEL_MIN (0x00)
 
 LTexture::LTexture() : width(0), height(0), texture(nullptr) {}
 
@@ -8,11 +12,11 @@ LTexture::~LTexture() {
     Free();
 }
 
-bool LTexture::LoadFromFile(const SDL_Renderer& rederer, const char* path) {
+bool LTexture::LoadFromFile(SDL_Renderer& renderer, const char* path) {
 
 }
 
-void LTexture::Render(const SDL_Renderer& renderer, int x, int y) {
+void LTexture::Render(SDL_Renderer& renderer, int x, int y) {
 
 }
 

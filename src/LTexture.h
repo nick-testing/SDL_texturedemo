@@ -10,10 +10,10 @@ class LTexture {
 
         ~LTexture();
 
-        bool LoadFromFile(const SDL_Renderer&, const char*);
+        bool LoadFromFile(SDL_Renderer&, const char*);
 
         // Render texture at a given (x,y) point
-        void Render(const SDL_Renderer&, int, int);
+        void Render(SDL_Renderer&, int, int);
 
         // Deallocate memory
         void Free();
