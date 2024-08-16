@@ -3,10 +3,6 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
-#define SPRITES_PER_SHEET 4
-
-static SDL_Rect gSpriteClips[SPRITES_PER_SHEET];
-
 Game::Game(): window(NULL), renderer(NULL) {};
 
 /**
@@ -61,25 +57,25 @@ bool Game::LoadMedia() {
     success = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
     
     if (success) {
-        gSpriteClips[0].x = 0;
-        gSpriteClips[0].y = 0;
-        gSpriteClips[0].w = 100;
-        gSpriteClips[0].h = 100;
+        spriteClips[0].x = 0;
+        spriteClips[0].y = 0;
+        spriteClips[0].w = 100;
+        spriteClips[0].h = 100;
         
-        gSpriteClips[1].x = 100;
-        gSpriteClips[1].y = 0;
-        gSpriteClips[1].w = 100;
-        gSpriteClips[1].h = 100;
+        spriteClips[1].x = 100;
+        spriteClips[1].y = 0;
+        spriteClips[1].w = 100;
+        spriteClips[1].h = 100;
 
-        gSpriteClips[2].x = 0;
-        gSpriteClips[2].y = 100;
-        gSpriteClips[2].w = 100;
-        gSpriteClips[2].h = 100;
+        spriteClips[2].x = 0;
+        spriteClips[2].y = 100;
+        spriteClips[2].w = 100;
+        spriteClips[2].h = 100;
 
-        gSpriteClips[3].x = 100;
-        gSpriteClips[3].y = 100;
-        gSpriteClips[3].w = 100;
-        gSpriteClips[3].h = 100;
+        spriteClips[3].x = 100;
+        spriteClips[3].y = 100;
+        spriteClips[3].w = 100;
+        spriteClips[3].h = 100;
     }
         
     return success;
@@ -120,13 +116,13 @@ void Game::RenderLoop() {
         foregroundTexture.Render(renderer, 324, 418);
 
         // Reender sprites clipped from sprite sheet
-        spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
-        spriteClipTexture.Render(renderer, SCREEN_WIDTH - gSpriteClips[1].w, 0, &gSpriteClips[1]);
-        spriteClipTexture.Render(renderer, 0, SCREEN_HEIGHT - gSpriteClips[2].h, &gSpriteClips[2]);
+        spriteClipTexture.Render(renderer, 0, 0, &spriteClips[0]);
+        spriteClipTexture.Render(renderer, SCREEN_WIDTH - spriteClips[1].w, 0, &spriteClips[1]);
+        spriteClipTexture.Render(renderer, 0, SCREEN_HEIGHT - spriteClips[2].h, &spriteClips[2]);
         spriteClipTexture.Render(renderer, 
-                                 SCREEN_WIDTH - gSpriteClips[3].w,
-                                 SCREEN_HEIGHT - gSpriteClips[3].h,
-                                 &gSpriteClips[3]);
+                                 SCREEN_WIDTH - spriteClips[3].w,
+                                 SCREEN_HEIGHT - spriteClips[3].h,
+                                 &spriteClips[3]);
 
         // Update screen
         SDL_RenderPresent(renderer);
