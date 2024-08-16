@@ -56,7 +56,7 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
  * \param x the x coordinate of the top left corner
  * \param y the y coordinate of the top left corner
  * \param clip Optional SDL_Rect structre that will serve as a
- *             cropping rectangle for the texture
+ *             cropping rectangle for a sprite sheet
  */
 void LTexture::Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip) {
     SDL_Rect renderArea = {x, y, width, height};
