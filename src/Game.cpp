@@ -45,6 +45,16 @@ bool Game::Init() {
     return success;
 }
 
+bool Game::LoadMedia() {
+    bool success = true;
+    
+    success = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
+
+    success = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
+    
+    return success;
+}
+
 void Game::Close() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
