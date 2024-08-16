@@ -14,6 +14,9 @@ class LTexture {
         // Render texture at a given (x,y) point
         void Render(int, int);
 
+        // Deallocate memory
+        void Free();
+
         int GetWidth();
         int GetHeight();
     private:
@@ -22,9 +25,6 @@ class LTexture {
         // Image dimensions
         int width;
         int height;
-
-        // Deallocate memory
-        void Free();
 };
 
 #endif
