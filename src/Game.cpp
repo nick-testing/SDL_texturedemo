@@ -45,6 +45,19 @@ bool Game::Init() {
     return success;
 }
 
+void Game::Close() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    renderer = nullptr;
+    window = nullptr;
+
+    backgroundTexture.Free();
+    foregroundTexture.Free();
+
+    SDL_Quit();
+    IMG_Quit();
+}
+
 bool Game::LoadMedia() {
     bool success = true;
     
@@ -79,19 +92,6 @@ bool Game::LoadMedia() {
     }
         
     return success;
-}
-
-void Game::Close() {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    renderer = nullptr;
-    window = nullptr;
-
-    backgroundTexture.Free();
-    foregroundTexture.Free();
-
-    SDL_Quit();
-    IMG_Quit();
 }
 
 void Game::RenderLoop() {
