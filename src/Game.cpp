@@ -70,21 +70,25 @@ bool Game::LoadMedia() {
     success = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
     
     if (success) {
+        // Top left sprite
         spriteClips[0].x = 0;
         spriteClips[0].y = 0;
         spriteClips[0].w = 100;
         spriteClips[0].h = 100;
         
+        // Top right sprite
         spriteClips[1].x = 100;
         spriteClips[1].y = 0;
         spriteClips[1].w = 100;
         spriteClips[1].h = 100;
 
+        // Bottom left sprite
         spriteClips[2].x = 0;
         spriteClips[2].y = 100;
         spriteClips[2].w = 100;
         spriteClips[2].h = 100;
 
+        // Bottom right sprite
         spriteClips[3].x = 100;
         spriteClips[3].y = 100;
         spriteClips[3].w = 100;
@@ -115,10 +119,16 @@ void Game::RenderLoop() {
         // Render foreground texture
         foregroundTexture.Render(renderer, 324, 418);
 
-        // Reender sprites clipped from sprite sheet
+        // Reender top left sprite
         spriteClipTexture.Render(renderer, 0, 0, &spriteClips[0]);
+
+        // Render top right sprite
         spriteClipTexture.Render(renderer, SCREEN_WIDTH - spriteClips[1].w, 0, &spriteClips[1]);
+        
+        // Render bottom left sprite
         spriteClipTexture.Render(renderer, 0, SCREEN_HEIGHT - spriteClips[2].h, &spriteClips[2]);
+
+        // Render bottom right sprite
         spriteClipTexture.Render(renderer, 
                                  SCREEN_WIDTH - spriteClips[3].w,
                                  SCREEN_HEIGHT - spriteClips[3].h,
