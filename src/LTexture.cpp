@@ -45,7 +45,7 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
 
         SDL_FreeSurface(loadedSurface);
     }
-
+    
     return texture;
 }
 
@@ -67,7 +67,7 @@ void LTexture::Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip) {
         renderArea.h = clip->h;
     }
 
-    SDL_RenderCopy(renderer, texture, NULL, &renderArea); 
+    SDL_RenderCopy(renderer, texture, clip, &renderArea); 
 }
 
 int LTexture::GetWidth() {
