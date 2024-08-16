@@ -56,7 +56,7 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
  * \param x the x coordinate of the top left corner
  * \param y the y coordinate of the top left corner
  */
-void LTexture::Render(SDL_Renderer* renderer, int x, int y) {
+void LTexture::Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = NULL) {
     SDL_Rect renderArea = {x, y, width, height};
     SDL_RenderCopy(renderer, texture, NULL, &renderArea); 
 }
