@@ -119,6 +119,15 @@ void Game::RenderLoop() {
         // Render foreground texture
         foregroundTexture.Render(renderer, 324, 418);
 
+        // Reender sprites clipped from sprite sheet
+        spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
+        spriteClipTexture.Render(renderer, SCREEN_WIDTH - gSpriteClips[1].w, 0, &gSpriteClips[1]);
+        spriteClipTexture.Render(renderer, 0, SCREEN_HEIGHT - gSpriteClips[2].h, &gSpriteClips[2]);
+        spriteClipTexture.Render(renderer, 
+                                 SCREEN_WIDTH - gSpriteClips[3].w,
+                                 SCREEN_HEIGHT - gSpriteClips[3].h,
+                                 &gSpriteClips[3]);
+
         // Update screen
         SDL_RenderPresent(renderer);
     }
