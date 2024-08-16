@@ -55,9 +55,18 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
  * \param renderer the rendering context
  * \param x the x coordinate of the top left corner
  * \param y the y coordinate of the top left corner
+ * \param clip Optional SDL_Rect structre that will serve as a
+ *             cropping rectangle for the texture
  */
-void LTexture::Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = NULL) {
+void LTexture::Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip) {
     SDL_Rect renderArea = {x, y, width, height};
+    
+    // Set cropping rectangle dimensions
+    if (clip) {
+        renderArea.w = clip->w;
+        renderArea.h = clip->h;
+    }
+
     SDL_RenderCopy(renderer, texture, NULL, &renderArea); 
 }
 
