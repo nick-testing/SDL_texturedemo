@@ -24,6 +24,14 @@ int LTexture::GetHeight() {
     return height;
 }
 
+/**
+ * Frees texture if texture exists
+ */
 void LTexture::Free() {
-    SDL_DestroyTexture(texture);
+    if (texture) {
+        SDL_DestroyTexture(texture);
+        texture = nullptr;
+        width = 0;
+        height = 0; 
+    }
 }
