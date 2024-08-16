@@ -3,6 +3,7 @@
 
 typedef struct SDL_Texture SDL_Texture;
 typedef struct SDL_Renderer SDL_Renderer;
+typedef struct SDL_Rect SDL_rect;
 
 class LTexture {
     public:
@@ -12,10 +13,8 @@ class LTexture {
 
         bool LoadFromFile(SDL_Renderer*, const char*);
 
-        // Render texture at a given (x,y) point
-        void Render(SDL_Renderer*, int, int);
+        void Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = nullptr);
 
-        // Deallocate memory
         void Free();
 
         int GetWidth();
@@ -23,7 +22,6 @@ class LTexture {
     private:
         SDL_Texture* texture;
 
-        // Image dimensions
         int width;
         int height;
 };
