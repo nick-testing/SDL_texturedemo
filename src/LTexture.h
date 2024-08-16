@@ -11,9 +11,11 @@ class LTexture {
 
         ~LTexture();
 
-        bool LoadFromFile(SDL_Renderer*, const char*);
+        bool LoadFromFile(SDL_Renderer* renderer, const char* path);
 
         void Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = nullptr);
+
+        void SetColor(Uint8 red, Uint8 green, Uint8 blue);
 
         void Free();
 
@@ -22,6 +24,7 @@ class LTexture {
     private:
         SDL_Texture* texture;
 
+        // Image dimensions
         int width;
         int height;
 };

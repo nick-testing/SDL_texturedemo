@@ -70,6 +70,20 @@ void LTexture::Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip) {
     SDL_RenderCopy(renderer, texture, clip, &renderArea); 
 }
 
+/**
+ * Allows altering the color of rendered texture AKA color modulation
+ * Each of color channel value is modulated using the 
+ * following formula:
+ * `srcC = srcC * (color / 255)`
+ * 
+ * \param red Red color value in ranges 0x00-0xFF
+ * \param green Green color value in ranges 0x00-0xFF
+ * \param blue Blue color value in ranges 0x00-0xFF
+ */
+void LTexture::SetColor(Uint8 red, Uint8 green, Uint8 blue) {
+    SDL_SetTextureColorMod(texture, red, green, blue);
+}
+
 int LTexture::GetWidth() {
     return width;
 }
