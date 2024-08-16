@@ -95,3 +95,11 @@ void Game::RenderLoop() {
         SDL_RenderPresent(renderer);
     }
 }
+
+void Game::Run() {
+    if (Init()) {
+        LoadMedia();
+        RenderLoop();
+    }
+    Close();
+}
