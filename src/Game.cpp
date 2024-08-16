@@ -48,8 +48,10 @@ bool Game::Init() {
 bool Game::LoadMedia() {
     bool success = true;
     
+    // Load foreground texture
     success = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
 
+    // Load background texture
     success = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
     
     return success;
@@ -66,4 +68,30 @@ void Game::Close() {
 
     SDL_Quit();
     IMG_Quit();
+}
+
+void Game::RenderLoop() {
+    bool quit = false;
+    SDL_Event e;
+
+    while (!quit) {
+        while (SDL_PollEvent(&e) != 0) {
+            if (SDL_QUIT == e.type) {
+                quit = true;
+            }
+        }
+
+        // Clear screen
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+        SDL_RenderClear(renderer);
+
+        // Render background texture
+        backgroundTexture.Render(renderer, 0, 0);
+
+        // Render foreground texture
+        foregroundTexture.Render(renderer, 324, 418);
+
+        // Update screen
+        SDL_RenderPresent(renderer);
+    }
 }
