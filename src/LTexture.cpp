@@ -8,11 +8,11 @@ LTexture::~LTexture() {
     Free();
 }
 
-bool LTexture::LoadFromFile(SDL_Renderer* rederer, const char* path) {
+bool LTexture::LoadFromFile(const SDL_Renderer& rederer, const char* path) {
 
 }
 
-void LTexture::Render(SDL_Renderer* renderer, int x, int y) {
+void LTexture::Render(const SDL_Renderer& renderer, int x, int y) {
 
 }
 
