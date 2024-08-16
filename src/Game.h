@@ -23,7 +23,7 @@ private:
     
     bool Init();
     bool LoadMedia();
-
+    void RenderLoop();
     void Close();
 };
 
