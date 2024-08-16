@@ -24,11 +24,7 @@ private:
     bool Init();
     bool LoadMedia();
 
-
     void Close();
-
-    void RenderTexture();
-    void RenderViewport();
 };
 
 #endif
