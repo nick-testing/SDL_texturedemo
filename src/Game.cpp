@@ -154,6 +154,78 @@ void Game::RenderLoop() {
             if (SDL_QUIT == e.type) {
                 quit = true;
             }
+            else if(SDL_KEYDOWN == e.type) {
+                switch (e.key.keysym.sym) {
+                    case SDLK_F1:
+                        // Render Midnight sky texture
+                        ClearScreen();
+                        backgroundTexture.Render(renderer, 0, 0);
+                        foregroundTexture.Render(renderer, 324, 418);
+                        break;
+
+                    case SDLK_F2:
+                        // Render sprites from sprite sheet
+                        // Reender top left sprite
+                        spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
+
+                        // Render top right sprite
+                        spriteClipTexture.Render(renderer,
+                                                 SCREEN_WIDTH - gSpriteClips[1].w, 
+                                                 0, 
+                                                 &gSpriteClips[1]);
+                        
+                        // Render bottom left sprite
+                        spriteClipTexture.Render(renderer,
+                                                 0,
+                                                 SCREEN_HEIGHT - gSpriteClips[2].h, 
+                                                 &gSpriteClips[2]);
+
+                        // Render bottom right sprite
+                        spriteClipTexture.Render(renderer, 
+                                                SCREEN_WIDTH - gSpriteClips[3].w,
+                                                SCREEN_HEIGHT - gSpriteClips[3].h,
+                                                &gSpriteClips[3]);
+                        break;
+
+                    case SDLK_F3:
+                        // Color modulation - change rgb value on keypress
+                        RenderColorModulation(renderer, r, g, b);
+                        break;
+
+                    case SDLK_q:
+                        r += 32;
+                        RenderColorModulation(renderer, r, g, b);
+                        break;
+
+                    case SDLK_w:
+                        g += 32;
+                        RenderColorModulation(renderer, r, g, b);
+                        break;
+
+                    case SDLK_e:
+                        b+=32;
+                        RenderColorModulation(renderer, r, g, b);
+                        break;
+
+                    case SDLK_a:
+                        r -= 32;
+                        RenderColorModulation(renderer, r, g, b);
+                        break;
+
+                    case SDLK_s:
+                        g -= 32;
+                        RenderColorModulation(renderer, r, g, b);
+                        break;
+
+                    case SDLK_d:
+                        b -= 32;
+                        RenderColorModulation(renderer, r, g, b);
+                        break;
+                    
+                    case SDLK_ESCAPE:
+                        quit = true;
+                }
+            }
         }
         // Update screen
         SDL_RenderPresent(renderer);
