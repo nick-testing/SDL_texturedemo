@@ -27,6 +27,9 @@ private:
     // Scene sprites
     LTexture spriteClipTexture;
     SDL_Rect spriteClips[SPRITES_PER_SHEET];
+
+    // modulation test texture
+    LTexture modulatedTexture;
     
     bool Init();
     bool LoadMedia();

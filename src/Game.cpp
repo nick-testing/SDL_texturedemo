@@ -53,6 +53,9 @@ void Game::Close() {
 
     backgroundTexture.Free();
     foregroundTexture.Free();
+    spriteClipTexture.Free();
+    modulatedTexture.Free();
+    
 
     SDL_Quit();
     IMG_Quit();
@@ -94,6 +97,8 @@ bool Game::LoadMedia() {
         spriteClips[3].w = 100;
         spriteClips[3].h = 100;
     }
+
+    success = modulatedTexture.LoadFromFile(renderer, "assets/RGBWtexture.png");
         
     return success;
 }
@@ -102,10 +107,43 @@ void Game::RenderLoop() {
     bool quit = false;
     SDL_Event e;
 
+    // Modulation componenets
+    Uint8 r = 255;
+    Uint8 g = 255;
+    Uint8 b = 255;
+
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (SDL_QUIT == e.type) {
                 quit = true;
+            }
+            // Change RGB value on keypress
+            else if(SDL_KEYDOWN == e.type) {
+                switch (e.key.keysym.sym) {
+                    case SDLK_q:
+                    r += 32;
+                    break;
+
+                    case SDLK_w:
+                    g += 32;
+                    break;
+
+                    case SDLK_e:
+                    b+=32;
+                    break;
+
+                    case SDLK_a:
+                    r -= 32;
+                    break;
+
+                    case SDLK_s:
+                    g -= 32;
+                    break;
+
+                    case SDLK_d:
+                    b -= 32;
+                    break;
+                }
             }
         }
 
@@ -113,26 +151,29 @@ void Game::RenderLoop() {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
 
-        // Render background texture
-        backgroundTexture.Render(renderer, 0, 0);
+        // // Render background texture
+        // backgroundTexture.Render(renderer, 0, 0);
 
-        // Render foreground texture
-        foregroundTexture.Render(renderer, 324, 418);
+        // // Render foreground texture
+        // foregroundTexture.Render(renderer, 324, 418);
 
-        // Reender top left sprite
-        spriteClipTexture.Render(renderer, 0, 0, &spriteClips[0]);
+        // // Reender top left sprite
+        // spriteClipTexture.Render(renderer, 0, 0, &spriteClips[0]);
 
-        // Render top right sprite
-        spriteClipTexture.Render(renderer, SCREEN_WIDTH - spriteClips[1].w, 0, &spriteClips[1]);
+        // // Render top right sprite
+        // spriteClipTexture.Render(renderer, SCREEN_WIDTH - spriteClips[1].w, 0, &spriteClips[1]);
         
-        // Render bottom left sprite
-        spriteClipTexture.Render(renderer, 0, SCREEN_HEIGHT - spriteClips[2].h, &spriteClips[2]);
+        // // Render bottom left sprite
+        // spriteClipTexture.Render(renderer, 0, SCREEN_HEIGHT - spriteClips[2].h, &spriteClips[2]);
 
-        // Render bottom right sprite
-        spriteClipTexture.Render(renderer, 
-                                 SCREEN_WIDTH - spriteClips[3].w,
-                                 SCREEN_HEIGHT - spriteClips[3].h,
-                                 &spriteClips[3]);
+        // // Render bottom right sprite
+        // spriteClipTexture.Render(renderer, 
+        //                          SCREEN_WIDTH - spriteClips[3].w,
+        //                          SCREEN_HEIGHT - spriteClips[3].h,
+        //                          &spriteClips[3]);
+
+        modulatedTexture.SetColor(r, g, b);
+        modulatedTexture.Render(renderer, 0, 0);
 
         // Update screen
         SDL_RenderPresent(renderer);
