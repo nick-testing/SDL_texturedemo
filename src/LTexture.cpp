@@ -29,8 +29,12 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
     }
     else {
         // Set the color key(transparent pixel color) in the loaded surface
-        SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, COLOR_CHANNEL_MIN, 
-                        COLOR_CHANNEL_MAX, COLOR_CHANNEL_MAX));
+        SDL_SetColorKey(loadedSurface,
+                        SDL_TRUE,
+                        SDL_MapRGB(loadedSurface->format, 
+                                   COLOR_CHANNEL_MIN,
+                                   COLOR_CHANNEL_MAX, 
+                                   COLOR_CHANNEL_MAX));
 
         // Create a texture from the color keyed loaded surface
         texture = SDL_CreateTextureFromSurface(renderer, loadedSurface);

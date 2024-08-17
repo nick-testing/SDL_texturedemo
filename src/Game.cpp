@@ -19,8 +19,12 @@ bool Game::Init() {
         success = false;
     }
     else {
-        window = SDL_CreateWindow("SDL Renderer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                    SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        window = SDL_CreateWindow("SDL Renderer",
+                                  SDL_WINDOWPOS_CENTERED,
+                                  SDL_WINDOWPOS_CENTERED,
+                                  SCREEN_WIDTH,
+                                  SCREEN_HEIGHT,
+                                  SDL_WINDOW_SHOWN);
         if (!window) {
             std::cerr << "SDL window creation failed, SDL error: " << SDL_GetError() << std::endl;
             success = false;
@@ -56,7 +60,6 @@ void Game::Close() {
     spriteClipTexture.Free();
     modulatedTexture.Free();
     
-
     SDL_Quit();
     IMG_Quit();
 }
@@ -103,14 +106,17 @@ bool Game::LoadMedia() {
     return success;
 }
 
+/**
+ * \todo add texture selection from user, load different texture based on user input (how?)
+ */
 void Game::RenderLoop() {
     bool quit = false;
     SDL_Event e;
 
     // Modulation componenets
-    Uint8 r = 255;
-    Uint8 g = 255;
-    Uint8 b = 255;
+    Uint8 r = 0xFF;
+    Uint8 g = 0xFF;
+    Uint8 b = 0xFF;
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
