@@ -1,6 +1,8 @@
 #ifndef LTEXURE_H
 #define LTEXTURE_H
 
+#include <SDL2/SDL_stdinc.h> // Uint8
+
 typedef struct SDL_Texture SDL_Texture;
 typedef struct SDL_Renderer SDL_Renderer;
 typedef struct SDL_Rect SDL_rect;
