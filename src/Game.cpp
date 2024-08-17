@@ -53,12 +53,35 @@ bool Game::Init() {
     return success;
 }
 
+/**
+ * Clears currently displayed image
+ */
+void Game::ClearScreen() {
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(renderer);
+}
+
+/**
+ * Renders a texture with color modulation applied
+ * 
+ * \param renderer the rendering context
+ * \param r red color value
+ * \param g green color value
+ * \param b blue color value
+ */
+void Game::RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b) {
+    ClearScreen();
+    modulatedTexture.SetColor(r, g, b);
+    modulatedTexture.Render(renderer, 0, 0);
+}
+
 void Game::Close() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     renderer = nullptr;
     window = nullptr;
 
+    defaultTexture.Free();
     backgroundTexture.Free();
     foregroundTexture.Free();
     spriteClipTexture.Free();
@@ -70,6 +93,9 @@ void Game::Close() {
 
 bool Game::LoadMedia() {
     bool success = true;
+
+    // Load default texture
+    success = defaultTexture.LoadFromFile(renderer, "assets/mainmenu.png");
     
     // Load foreground texture
     success = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
@@ -110,9 +136,6 @@ bool Game::LoadMedia() {
     return success;
 }
 
-/**
- * \todo add texture selection from user, load different texture based on user input (how?)
- */
 void Game::RenderLoop() {
     bool quit = false;
     SDL_Event e;
@@ -122,69 +145,16 @@ void Game::RenderLoop() {
     Uint8 g = 0xFF;
     Uint8 b = 0xFF;
 
+    // Show main menu
+    ClearScreen();
+    defaultTexture.Render(renderer, 0, 0);
+
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (SDL_QUIT == e.type) {
                 quit = true;
             }
-            // Change RGB value on keypress
-            else if(SDL_KEYDOWN == e.type) {
-                switch (e.key.keysym.sym) {
-                    case SDLK_q:
-                    r += 32;
-                    break;
-
-                    case SDLK_w:
-                    g += 32;
-                    break;
-
-                    case SDLK_e:
-                    b+=32;
-                    break;
-
-                    case SDLK_a:
-                    r -= 32;
-                    break;
-
-                    case SDLK_s:
-                    g -= 32;
-                    break;
-
-                    case SDLK_d:
-                    b -= 32;
-                    break;
-                }
-            }
         }
-
-        // Clear screen
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(renderer);
-
-        // Render background texture
-        backgroundTexture.Render(renderer, 0, 0);
-
-        // Render foreground texture
-        foregroundTexture.Render(renderer, 324, 418);
-
-        // Reender top left sprite
-        spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
-
-        // Render top right sprite
-        spriteClipTexture.Render(renderer, SCREEN_WIDTH - gSpriteClips[1].w, 0, &gSpriteClips[1]);
-        
-        // Render bottom left sprite
-        spriteClipTexture.Render(renderer, 0, SCREEN_HEIGHT - gSpriteClips[2].h, &gSpriteClips[2]);
-
-        // Render bottom right sprite
-        spriteClipTexture.Render(renderer, 
-                                 SCREEN_WIDTH - gSpriteClips[3].w,
-                                 SCREEN_HEIGHT - gSpriteClips[3].h,
-                                 &gSpriteClips[3]);
-
-        // modulatedTexture.SetColor(r, g, b);
-        // modulatedTexture.Render(renderer, 0, 0);
-
         // Update screen
         SDL_RenderPresent(renderer);
     }
