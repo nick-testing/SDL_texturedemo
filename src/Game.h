@@ -19,6 +19,8 @@ private:
 
     SDL_Window* window;
     SDL_Renderer* renderer;
+    LTexture defaultTexture;
+
     LTexture backgroundTexture;
     LTexture foregroundTexture;
 
@@ -32,6 +34,10 @@ private:
     bool LoadMedia();
     void RenderLoop();
     void Close();
+
+    void RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b);
+
+    void ClearScreen();
 };
 
 #endif
