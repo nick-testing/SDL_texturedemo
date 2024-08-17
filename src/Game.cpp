@@ -91,6 +91,11 @@ void Game::Close() {
     IMG_Quit();
 }
 
+/**
+ * Manually load all textures stored at the ./assets/ directory
+ * 
+ * \todo convert this to automatic loading
+ */
 bool Game::LoadMedia() {
     bool success = true;
 
