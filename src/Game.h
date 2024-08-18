@@ -40,6 +40,7 @@ private:
     void Close();
 
     void RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b);
+    void RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha);
 
     void ClearScreen();
 };

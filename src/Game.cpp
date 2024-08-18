@@ -75,6 +75,19 @@ void Game::RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8
     modulatedTexture.Render(renderer, 0, 0);
 }
 
+/**
+ * Renders the alpha modulation scene
+ * 
+ * \param renderer the rendering context
+ * \param alpha alpha value used for modulating the texture
+ */
+void Game::RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha) {
+    ClearScreen();
+    bgAlphaTexture.Render(renderer, 0, 0);
+    fgAlphaTexture.SetAlpha(alpha);
+    fgAlphaTexture.Render(renderer, 0, 0);
+}
+
 void Game::Close() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -144,7 +157,7 @@ bool Game::LoadMedia() {
     if(textureLoadSuccess) {
         fgAlphaTexture.SetBlendMode(SDL_BLENDMODE_BLEND);
     }
-    textureLoadSuccess = bgAlphaTexture.LoadFromFile(renderer, "assets/alphafadeout.png");
+    textureLoadSuccess = bgAlphaTexture.LoadFromFile(renderer, "assets/alphafadein.png");
 
     return textureLoadSuccess;
 }
@@ -160,6 +173,7 @@ void Game::RenderLoop() {
     Uint8 r = 0xFF;
     Uint8 g = 0xFF;
     Uint8 b = 0xFF;
+
 
     // Show main menu
     ClearScreen();
@@ -209,7 +223,7 @@ void Game::RenderLoop() {
                         RenderColorModulation(renderer, r, g, b);
                         rgbModulationOn = true;
                         break;
-                    
+
                     case SDLK_ESCAPE:
                         quit = true;
                 }
@@ -245,7 +259,7 @@ void Game::RenderLoop() {
                             b -= 32;
                             RenderColorModulation(renderer, r, g, b);
                             break;
-                    }       
+                    }
                 }
             }
         }
