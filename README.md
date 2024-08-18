@@ -1,5 +1,5 @@
-## SDL Texture Renderer
-Advanced Texture Rendering program using libSDL2 and SDL_image
+## SDL Texture Demo
+Demonstration of advanced rendering features using libSDL2 and SDL_image
 
 ### Build
   - Tested on g++ ver. 11.4.0 with SDL2 and SDL_image ver. 2.0.20 
