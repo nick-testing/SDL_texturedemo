@@ -1,4 +1,4 @@
-#ifndef LTEXURE_H
+#ifndef LTEXTURE_H
 #define LTEXTURE_H
 
 #include <SDL2/SDL_stdinc.h> // Uint8
