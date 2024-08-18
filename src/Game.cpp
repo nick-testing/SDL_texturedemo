@@ -97,20 +97,20 @@ void Game::Close() {
  * \todo convert this to automatic loading
  */
 bool Game::LoadMedia() {
-    bool success = true;
+    bool textureLoadSuccess = true;
 
     // Load default texture
-    success = defaultTexture.LoadFromFile(renderer, "assets/mainmenu.png");
+    textureLoadSuccess = defaultTexture.LoadFromFile(renderer, "assets/mainmenu.png");
     
     // Load foreground texture
-    success = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
+    textureLoadSuccess = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
 
     // Load background texture
-    success = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
+    textureLoadSuccess = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
 
-    success = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
+    textureLoadSuccess = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
     
-    if (success) {
+    if (textureLoadSuccess) {
         // Top left sprite
         gSpriteClips[0].x = 0;
         gSpriteClips[0].y = 0;
@@ -136,15 +136,20 @@ bool Game::LoadMedia() {
         gSpriteClips[3].h = 100;
     }
 
-    success = modulatedTexture.LoadFromFile(renderer, "assets/RGBWtexture.png");
-        
-    return success;
+    // Load modulated texture
+    textureLoadSuccess = modulatedTexture.LoadFromFile(renderer, "assets/RGBWtexture.png");
+    
+    // Load alpha blend textures
+    textureLoadSuccess = foregroundAlphaTexture.LoadFromFile(renderer, "assets/alphafadeout.png");
+
+    return textureLoadSuccess;
 }
 
 void Game::RenderLoop() {
     bool quit = false;
+    bool modulationIsOn = false;
     SDL_Event e;
-
+    
     // Modulation componenets
     Uint8 r = 0xFF;
     Uint8 g = 0xFF;
@@ -166,11 +171,12 @@ void Game::RenderLoop() {
                         ClearScreen();
                         backgroundTexture.Render(renderer, 0, 0);
                         foregroundTexture.Render(renderer, 324, 418);
+                        modulationIsOn = false;
                         break;
 
                     case SDLK_F2:
                         // Render sprites from sprite sheet
-                        // Reender top left sprite
+                        // Render top left sprite
                         spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
 
                         // Render top right sprite
@@ -191,44 +197,49 @@ void Game::RenderLoop() {
                                                 SCREEN_HEIGHT - gSpriteClips[3].h,
                                                 &gSpriteClips[3]);
                         break;
-
+                    
                     case SDLK_F3:
                         // Color modulation - change rgb value on keypress
                         RenderColorModulation(renderer, r, g, b);
-                        break;
-
-                    case SDLK_q:
-                        r += 32;
-                        RenderColorModulation(renderer, r, g, b);
-                        break;
-
-                    case SDLK_w:
-                        g += 32;
-                        RenderColorModulation(renderer, r, g, b);
-                        break;
-
-                    case SDLK_e:
-                        b+=32;
-                        RenderColorModulation(renderer, r, g, b);
-                        break;
-
-                    case SDLK_a:
-                        r -= 32;
-                        RenderColorModulation(renderer, r, g, b);
-                        break;
-
-                    case SDLK_s:
-                        g -= 32;
-                        RenderColorModulation(renderer, r, g, b);
-                        break;
-
-                    case SDLK_d:
-                        b -= 32;
-                        RenderColorModulation(renderer, r, g, b);
+                        modulationIsOn = true;
                         break;
                     
                     case SDLK_ESCAPE:
                         quit = true;
+                }
+
+                if(modulationIsOn) {
+                    switch (e.key.keysym.sym) {
+                        case SDLK_q:
+                            r += 32;
+                            RenderColorModulation(renderer, r, g, b);
+                            break;
+
+                        case SDLK_w:
+                            g += 32;
+                            RenderColorModulation(renderer, r, g, b);
+                            break;
+
+                        case SDLK_e:
+                            b+=32;
+                            RenderColorModulation(renderer, r, g, b);
+                            break;
+
+                        case SDLK_a:
+                            r -= 32;
+                            RenderColorModulation(renderer, r, g, b);
+                            break;
+
+                        case SDLK_s:
+                            g -= 32;
+                            RenderColorModulation(renderer, r, g, b);
+                            break;
+
+                        case SDLK_d:
+                            b -= 32;
+                            RenderColorModulation(renderer, r, g, b);
+                            break;
+                    }       
                 }
             }
         }
