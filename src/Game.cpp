@@ -140,7 +140,11 @@ bool Game::LoadMedia() {
     textureLoadSuccess = modulatedTexture.LoadFromFile(renderer, "assets/RGBWtexture.png");
     
     // Load alpha blend textures
-    textureLoadSuccess = foregroundAlphaTexture.LoadFromFile(renderer, "assets/alphafadeout.png");
+    textureLoadSuccess = fgAlphaTexture.LoadFromFile(renderer, "assets/alphafadeout.png");
+    if(textureLoadSuccess) {
+        fgAlphaTexture.SetBlendMode(SDL_BLENDMODE_BLEND);
+    }
+    textureLoadSuccess = bgAlphaTexture.LoadFromFile(renderer, "assets/alphafadeout.png");
 
     return textureLoadSuccess;
 }

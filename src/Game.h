@@ -29,6 +29,10 @@ private:
 
     // modulation test texture
     LTexture modulatedTexture;
+
+    // Alpha blend textures
+    LTexture fgAlphaTexture;
+    LTexture bgAlphaTexture; 
     
     bool Init();
     bool LoadMedia();
