@@ -88,6 +88,26 @@ void LTexture::SetColor(Uint8 red, Uint8 green, Uint8 blue) {
     SDL_SetTextureColorMod(texture, red, green, blue);
 }
 
+/**
+ * Sets the blend mode for the texture
+ * 
+ * \param blendMode the SDL_BlendMode to use for texture rendering
+ */
+void LTexture::SetBlendMode(SDL_BlendMode blendMode) {
+    SDL_SetTextureBlendMode(texture, blendMode);
+}
+
+/**
+ * Sets the alpha value modifier used for rendering the image
+ * Uses the following formula:
+ * srcA = srcA * (alpha / 255)
+ * 
+ * \param alpha the alpha value multipled into the rendering operation
+ */
+void LTexture::SetAlpha(Uint8 alpha) {
+    SDL_SetTextureAlphaMod(texture, alpha);
+}
+
 int LTexture::GetWidth() {
     return width;
 }

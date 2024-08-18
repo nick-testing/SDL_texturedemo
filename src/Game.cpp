@@ -75,6 +75,19 @@ void Game::RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8
     modulatedTexture.Render(renderer, 0, 0);
 }
 
+/**
+ * Renders the alpha modulation scene
+ * 
+ * \param renderer the rendering context
+ * \param alpha alpha value used for modulating the texture
+ */
+void Game::RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha) {
+    ClearScreen();
+    bgAlphaTexture.Render(renderer, 0, 0);
+    fgAlphaTexture.SetAlpha(alpha);
+    fgAlphaTexture.Render(renderer, 0, 0);
+}
+
 void Game::Close() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -97,20 +110,20 @@ void Game::Close() {
  * \todo convert this to automatic loading
  */
 bool Game::LoadMedia() {
-    bool success = true;
+    bool textureLoadSuccess = true;
 
     // Load default texture
-    success = defaultTexture.LoadFromFile(renderer, "assets/mainmenu.png");
+    textureLoadSuccess = defaultTexture.LoadFromFile(renderer, "assets/mainmenu.png");
     
     // Load foreground texture
-    success = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
+    textureLoadSuccess = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
 
     // Load background texture
-    success = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
+    textureLoadSuccess = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
 
-    success = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
+    textureLoadSuccess = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
     
-    if (success) {
+    if (textureLoadSuccess) {
         // Top left sprite
         gSpriteClips[0].x = 0;
         gSpriteClips[0].y = 0;
@@ -137,22 +150,32 @@ bool Game::LoadMedia() {
     }
 
     // Load modulated texture
-    success = modulatedTexture.LoadFromFile(renderer, "assets/RGBWtexture.png");
+    textureLoadSuccess = modulatedTexture.LoadFromFile(renderer, "assets/RGBWtexture.png");
     
-    // Load alpha blending textures
+    // Load alpha blend textures
+    textureLoadSuccess = fgAlphaTexture.LoadFromFile(renderer, "assets/alphafadeout.png");
+    if(textureLoadSuccess) {
+        fgAlphaTexture.SetBlendMode(SDL_BLENDMODE_BLEND);
+    }
+    textureLoadSuccess = bgAlphaTexture.LoadFromFile(renderer, "assets/alphafadein.png");
 
-    return success;
+    return textureLoadSuccess;
 }
 
 void Game::RenderLoop() {
     bool quit = false;
-    bool modulationIsOn = false;
     SDL_Event e;
-    
+
+    // Demo mode flags
+    bool rgbModulationOn = false;
+    bool alphaModulationOn = false;
+
     // Modulation componenets
     Uint8 r = 0xFF;
     Uint8 g = 0xFF;
     Uint8 b = 0xFF;
+    // Alpha component
+    Uint8 a = 0xFF;
 
     // Show main menu
     ClearScreen();
@@ -170,12 +193,13 @@ void Game::RenderLoop() {
                         ClearScreen();
                         backgroundTexture.Render(renderer, 0, 0);
                         foregroundTexture.Render(renderer, 324, 418);
-                        modulationIsOn = false;
+                        rgbModulationOn = false;
+                        alphaModulationOn = false;
                         break;
 
                     case SDLK_F2:
                         // Render sprites from sprite sheet
-                        // Reender top left sprite
+                        // Render top left sprite
                         spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
 
                         // Render top right sprite
@@ -200,14 +224,21 @@ void Game::RenderLoop() {
                     case SDLK_F3:
                         // Color modulation - change rgb value on keypress
                         RenderColorModulation(renderer, r, g, b);
-                        modulationIsOn = true;
+                        rgbModulationOn = true;
+                        alphaModulationOn = false;
+                        break;
+
+                    case SDLK_F4:
+                        // Alpha modulation - change alpha value on keypress
+                        RenderAlphaModulation(renderer, a);
+                        alphaModulationOn = true;
                         break;
                     
                     case SDLK_ESCAPE:
                         quit = true;
                 }
-                
-                if(modulationIsOn) {
+
+                if(rgbModulationOn) {
                     switch (e.key.keysym.sym) {
                         case SDLK_q:
                             r += 32;
@@ -238,7 +269,17 @@ void Game::RenderLoop() {
                             b -= 32;
                             RenderColorModulation(renderer, r, g, b);
                             break;
-                    }       
+                    }
+                }
+                if (alphaModulationOn) {
+                    if (e.key.keysym.sym == SDLK_w) {
+                        a = (a + 32 > 255) ? 255 : a + 32;
+                        RenderAlphaModulation(renderer, a);
+                    }
+                    if (e.key.keysym.sym == SDLK_s) {
+                        a = (a - 32 < 0) ? 0 : a - 32;
+                        RenderAlphaModulation(renderer, a);
+                    }
                 }
             }
         }
