@@ -20,7 +20,7 @@ class LTexture {
 
         void SetColor(Uint8 red, Uint8 green, Uint8 blue);
 
-        void SetBlendMode(SDL_BlendMode blending);
+        void SetBlendMode(SDL_BlendMode blendMode);
          
         void SetAlpha(Uint8 alpha);
 
