@@ -97,20 +97,20 @@ void Game::Close() {
  * \todo convert this to automatic loading
  */
 bool Game::LoadMedia() {
-    bool success = true;
+    bool textureLoadSuccess = true;
 
     // Load default texture
-    success = defaultTexture.LoadFromFile(renderer, "assets/mainmenu.png");
+    textureLoadSuccess = defaultTexture.LoadFromFile(renderer, "assets/mainmenu.png");
     
     // Load foreground texture
-    success = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
+    textureLoadSuccess = foregroundTexture.LoadFromFile(renderer, "assets/foreground.png");
 
     // Load background texture
-    success = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
+    textureLoadSuccess = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
 
-    success = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
+    textureLoadSuccess = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
     
-    if (success) {
+    if (textureLoadSuccess) {
         // Top left sprite
         gSpriteClips[0].x = 0;
         gSpriteClips[0].y = 0;
@@ -137,11 +137,12 @@ bool Game::LoadMedia() {
     }
 
     // Load modulated texture
-    success = modulatedTexture.LoadFromFile(renderer, "assets/RGBWtexture.png");
+    textureLoadSuccess = modulatedTexture.LoadFromFile(renderer, "assets/RGBWtexture.png");
     
-    // Load alpha blending textures
+    // Load alpha blend textures
+    textureLoadSuccess = foregroundAlphaTexture.LoadFromFile(renderer, "assets/alphafadeout.png");
 
-    return success;
+    return textureLoadSuccess;
 }
 
 void Game::RenderLoop() {
@@ -175,7 +176,7 @@ void Game::RenderLoop() {
 
                     case SDLK_F2:
                         // Render sprites from sprite sheet
-                        // Reender top left sprite
+                        // Render top left sprite
                         spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
 
                         // Render top right sprite
@@ -206,7 +207,7 @@ void Game::RenderLoop() {
                     case SDLK_ESCAPE:
                         quit = true;
                 }
-                
+
                 if(modulationIsOn) {
                     switch (e.key.keysym.sym) {
                         case SDLK_q:
