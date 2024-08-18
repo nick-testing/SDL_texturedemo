@@ -99,6 +99,8 @@ void Game::Close() {
     foregroundTexture.Free();
     spriteClipTexture.Free();
     modulatedTexture.Free();
+    fgAlphaTexture.Free();
+    bgAlphaTexture.Free();
     
     SDL_Quit();
     IMG_Quit();
@@ -166,9 +168,8 @@ void Game::RenderLoop() {
     bool quit = false;
     SDL_Event e;
 
-    // Demo mode flags
-    bool rgbModulationOn = false;
-    bool alphaModulationOn = false;
+    // User selection render mode flag
+    RenderMode renderMode = RENDER_DEFAULT;
 
     // Modulation componenets
     Uint8 r = 0xFF;
@@ -186,59 +187,58 @@ void Game::RenderLoop() {
             if (SDL_QUIT == e.type) {
                 quit = true;
             }
+            // Input handling
             else if(SDL_KEYDOWN == e.type) {
                 switch (e.key.keysym.sym) {
+                    // Render static texture
                     case SDLK_F1:
-                        // Render Midnight sky texture
+                        renderMode = RENDER_DEFAULT;
                         ClearScreen();
                         backgroundTexture.Render(renderer, 0, 0);
                         foregroundTexture.Render(renderer, 324, 418);
-                        rgbModulationOn = false;
-                        alphaModulationOn = false;
                         break;
 
+                    // Render sprites from sprie sheet
                     case SDLK_F2:
-                        // Render sprites from sprite sheet
-                        // Render top left sprite
+                        // Top left sprite
                         spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
 
-                        // Render top right sprite
+                        // Top right sprite
                         spriteClipTexture.Render(renderer,
                                                  SCREEN_WIDTH - gSpriteClips[1].w, 
                                                  0, 
                                                  &gSpriteClips[1]);
                         
-                        // Render bottom left sprite
+                        // Bottom left sprite
                         spriteClipTexture.Render(renderer,
                                                  0,
                                                  SCREEN_HEIGHT - gSpriteClips[2].h, 
                                                  &gSpriteClips[2]);
 
-                        // Render bottom right sprite
+                        // Bottom right sprite
                         spriteClipTexture.Render(renderer, 
                                                 SCREEN_WIDTH - gSpriteClips[3].w,
                                                 SCREEN_HEIGHT - gSpriteClips[3].h,
                                                 &gSpriteClips[3]);
                         break;
                     
+                    // Color modulation
                     case SDLK_F3:
-                        // Color modulation - change rgb value on keypress
+                        renderMode = RENDER_RGB_MODULATION;
                         RenderColorModulation(renderer, r, g, b);
-                        rgbModulationOn = true;
-                        alphaModulationOn = false;
                         break;
-
+                    
+                    // Alpha modulation
                     case SDLK_F4:
-                        // Alpha modulation - change alpha value on keypress
+                        renderMode = RENDER_ALPHA_MODULATION;
                         RenderAlphaModulation(renderer, a);
-                        alphaModulationOn = true;
                         break;
                     
                     case SDLK_ESCAPE:
                         quit = true;
                 }
 
-                if(rgbModulationOn) {
+                if (RENDER_RGB_MODULATION == renderMode) {
                     switch (e.key.keysym.sym) {
                         case SDLK_q:
                             r += 32;
@@ -271,7 +271,7 @@ void Game::RenderLoop() {
                             break;
                     }
                 }
-                if (alphaModulationOn) {
+                else if (RENDER_ALPHA_MODULATION == renderMode) {
                     if (e.key.keysym.sym == SDLK_w) {
                         a = (a + 32 > 255) ? 255 : a + 32;
                         RenderAlphaModulation(renderer, a);
