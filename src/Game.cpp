@@ -151,9 +151,11 @@ bool Game::LoadMedia() {
 
 void Game::RenderLoop() {
     bool quit = false;
-    bool modulationIsOn = false;
     SDL_Event e;
-    
+
+    // Demo mode flags
+    bool rgbModulationOn = false;
+
     // Modulation componenets
     Uint8 r = 0xFF;
     Uint8 g = 0xFF;
@@ -175,7 +177,7 @@ void Game::RenderLoop() {
                         ClearScreen();
                         backgroundTexture.Render(renderer, 0, 0);
                         foregroundTexture.Render(renderer, 324, 418);
-                        modulationIsOn = false;
+                        rgbModulationOn = false;
                         break;
 
                     case SDLK_F2:
@@ -205,14 +207,14 @@ void Game::RenderLoop() {
                     case SDLK_F3:
                         // Color modulation - change rgb value on keypress
                         RenderColorModulation(renderer, r, g, b);
-                        modulationIsOn = true;
+                        rgbModulationOn = true;
                         break;
                     
                     case SDLK_ESCAPE:
                         quit = true;
                 }
 
-                if(modulationIsOn) {
+                if(rgbModulationOn) {
                     switch (e.key.keysym.sym) {
                         case SDLK_q:
                             r += 32;
