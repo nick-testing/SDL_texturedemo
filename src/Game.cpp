@@ -168,12 +168,14 @@ void Game::RenderLoop() {
 
     // Demo mode flags
     bool rgbModulationOn = false;
+    bool alphaModulationOn = false;
 
     // Modulation componenets
     Uint8 r = 0xFF;
     Uint8 g = 0xFF;
     Uint8 b = 0xFF;
-
+    // Alpha component
+    Uint8 a = 0xFF;
 
     // Show main menu
     ClearScreen();
@@ -192,6 +194,7 @@ void Game::RenderLoop() {
                         backgroundTexture.Render(renderer, 0, 0);
                         foregroundTexture.Render(renderer, 324, 418);
                         rgbModulationOn = false;
+                        alphaModulationOn = false;
                         break;
 
                     case SDLK_F2:
@@ -222,8 +225,15 @@ void Game::RenderLoop() {
                         // Color modulation - change rgb value on keypress
                         RenderColorModulation(renderer, r, g, b);
                         rgbModulationOn = true;
+                        alphaModulationOn = false;
                         break;
 
+                    case SDLK_F4:
+                        // Alpha modulation - change alpha value on keypress
+                        RenderAlphaModulation(renderer, a);
+                        alphaModulationOn = true;
+                        break;
+                    
                     case SDLK_ESCAPE:
                         quit = true;
                 }
@@ -259,6 +269,16 @@ void Game::RenderLoop() {
                             b -= 32;
                             RenderColorModulation(renderer, r, g, b);
                             break;
+                    }
+                }
+                if (alphaModulationOn) {
+                    if (e.key.keysym.sym == SDLK_w) {
+                        a = (a + 32 > 255) ? 255 : a + 32;
+                        RenderAlphaModulation(renderer, a);
+                    }
+                    if (e.key.keysym.sym == SDLK_s) {
+                        a = (a - 32 < 0) ? 0 : a - 32;
+                        RenderAlphaModulation(renderer, a);
                     }
                 }
             }
