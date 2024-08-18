@@ -9,7 +9,7 @@ Demonstration of advanced rendering features using libSDL2 and SDL_image
 
 
 #### Design
-Currently, the program consists of a main Game class which contatins public executable functiosn and an LTexture wrapper class for the SDL_Texture structure.
+The program consists of a main Game class which contatins public executable functiosn and an LTexture wrapper class for the SDL_Texture structure.
 
 Here's the current design document:
 <img src=https://raw.githubusercontent.com/nick-testing/SDL_texturedemo/master/misc/design.png>
