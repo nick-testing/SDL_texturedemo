@@ -27,7 +27,7 @@ private:
     LTexture foregroundTexture;
 
     // Scene sprites
-    LTexture spriteClipTexture;
+    LTexture spriteSheetTexture;
 
     // modulation test texture
     LTexture modulatedTexture;
