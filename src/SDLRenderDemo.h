@@ -1,7 +1,8 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef RENDERDEMO_H
+#define RENDERDEMO_H
 
 #include "LTexture.h"
+#include "SDLProgram.h"
 #include <SDL2/SDL_rect.h>
 
 typedef struct SDL_Window SDL_Window;
@@ -14,17 +15,12 @@ typedef enum RenderMode {
     RENDER_ALPHA_MODULATION
 } RenderMode;
 
-class Game {
+class SDLRenderDemo : SDLProgram {
 public:
-    Game();
-    void Run();
+    SDLRenderDemo();
+    void Run() override;
 
 private:
-    static const int SCREEN_HEIGHT = 600;
-    static const int SCREEN_WIDTH = 800;
-
-    SDL_Window* window;
-    SDL_Renderer* renderer;
     LTexture defaultTexture;
 
     LTexture backgroundTexture;
@@ -40,15 +36,12 @@ private:
     LTexture fgAlphaTexture;
     LTexture bgAlphaTexture; 
     
-    bool Init();
-    bool LoadMedia();
-    void RenderLoop();
-    void Close();
+    bool LoadMedia() override;
+    void RenderLoop() override;
+    void Close() override;
 
     void RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b);
     void RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha);
-
-    void ClearScreen();
 };
 
 #endif
