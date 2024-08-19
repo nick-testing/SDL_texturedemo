@@ -31,4 +31,4 @@ SDLRender is a wrapper class for the SDL_Renderer struct and offers various rend
 
 The current UML design document:
 
-<img src=https://github.com/user-attachments/assets/90b37374-b12b-4ff8-8860-3e6a68d896b1>
+![The design sheet](/misc/design.png)
