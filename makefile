@@ -2,7 +2,7 @@ CC= g++
 CPP_FLAGS= -pedantic
 LINKER_FLAGS= -lSDL2 -lSDL2_image
 SRC_DIR= ./src/
-OBJ_NAME= $(SRC_DIR)main.o $(SRC_DIR)Game.o $(SRC_DIR)LTexture.o
+OBJ_NAME= $(SRC_DIR)main.o $(SRC_DIR)SDLRenderDemo.o $(SRC_DIR)LTexture.o $(SRC_DIR)SDLProgram.o
 OUTPUT= output
 OUTPUT_BIN= game.out
 
