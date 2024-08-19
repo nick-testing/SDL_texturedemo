@@ -45,7 +45,7 @@ void SDLRenderDemo::Close() {
     defaultTexture.Free();
     backgroundTexture.Free();
     foregroundTexture.Free();
-    spriteClipTexture.Free();
+    spriteSheetTexture.Free();
     modulatedTexture.Free();
     fgAlphaTexture.Free();
     bgAlphaTexture.Free();
@@ -71,7 +71,7 @@ bool SDLRenderDemo::LoadMedia() {
     // Load background texture
     textureLoadSuccess = backgroundTexture.LoadFromFile(renderer, "assets/background.png");
 
-    textureLoadSuccess = spriteClipTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
+    textureLoadSuccess = spriteSheetTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
     
     if (textureLoadSuccess) {
         // Top left sprite
@@ -149,22 +149,22 @@ void SDLRenderDemo::RenderLoop() {
                     // Render sprites from sprie sheet
                     case SDLK_F2:
                         // Top left sprite
-                        spriteClipTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
+                        spriteSheetTexture.Render(renderer, 0, 0, &gSpriteClips[0]);
 
                         // Top right sprite
-                        spriteClipTexture.Render(renderer,
+                        spriteSheetTexture.Render(renderer,
                                                  SCREEN_WIDTH - gSpriteClips[1].w, 
                                                  0, 
                                                  &gSpriteClips[1]);
                         
                         // Bottom left sprite
-                        spriteClipTexture.Render(renderer,
+                        spriteSheetTexture.Render(renderer,
                                                  0,
                                                  SCREEN_HEIGHT - gSpriteClips[2].h, 
                                                  &gSpriteClips[2]);
 
                         // Bottom right sprite
-                        spriteClipTexture.Render(renderer, 
+                        spriteSheetTexture.Render(renderer, 
                                                 SCREEN_WIDTH - gSpriteClips[3].w,
                                                 SCREEN_HEIGHT - gSpriteClips[3].h,
                                                 &gSpriteClips[3]);
