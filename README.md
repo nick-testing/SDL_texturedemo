@@ -1,5 +1,5 @@
 ## SDL Texture Demo
-Demonstration of advanced rendering features using libSDL2 and SDL_image
+Demonstration of advanced rendering features using libSDL2, image, ttf and mixer libraries
 
 ### Prerequisites
 - Requries libSDL2, libSDL2-image, libSDL2-ttf, g++ compiler and git in order to run. Installation instructions are provided below:
