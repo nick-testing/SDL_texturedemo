@@ -1,8 +1,8 @@
-#include "Game.h"
+#include "SDLRenderDemo.h"
 
 int main(int argc, char* argv[]) {
-    Game g;
+    SDLRenderDemo r;
     
-    g.Run();
+    r.Run();
     return 0;
 }
