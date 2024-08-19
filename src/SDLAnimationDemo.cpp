@@ -54,22 +54,28 @@ void SDLAnimationDemo::RenderLoop() {
     bool quit = false;
     SDL_Event e;
 
+    // Holds current animation frame
     int frame = 0;
+
     while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (SDL_QUIT == e.type || SDLK_ESCAPE == e.key.keysym.sym) {
                 quit = true;
             }
         }
+        ClearScreen();
 
-        ClearScreen();        
+        // Render current frame - leave frame on screen for (FRAME_DELAY) screen refreshes
         SDL_Rect* currentClip = &gSpriteClips[frame / FRAME_DELAY];
-
-        spriteSheetTexture.Render(renderer, (SCREEN_WIDTH - currentClip->w) / 2, (SCREEN_HEIGHT - currentClip->h) / 2, currentClip);
+        spriteSheetTexture.Render(renderer,
+                                  (SCREEN_WIDTH - currentClip->w) / 2,
+                                  (SCREEN_HEIGHT - currentClip->h) / 2, 
+                                  currentClip);
 
         SDL_RenderPresent(renderer);
         
-        frame = ((frame + 1) / FRAME_DELAY) >= WALKING_ANIMATION_FRAMES ? 0 : frame + 1;
+        // Cycle the animation
+        frame = ((frame + 1) / FRAME_DELAY) < WALKING_ANIMATION_FRAMES ? frame + 1 : 0;
     }
 
 }
