@@ -1,5 +1,5 @@
-#ifndef RENDERDEMO_H
-#define RENDERDEMO_H
+#ifndef SDLRENDERDEMO_H
+#define SDLRENDERDEMO_H
 
 #include "LTexture.h"
 #include "SDLProgram.h"

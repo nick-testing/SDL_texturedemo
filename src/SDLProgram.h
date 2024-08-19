@@ -1,5 +1,5 @@
-#ifndef SDLPROGRAM
-#define SDLPROGRAM
+#ifndef SDLPROGRAM_H
+#define SDLPROGRAM_H
 
 #include "LTexture.h"
 #include <SDL2/SDL_rect.h>
