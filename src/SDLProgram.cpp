@@ -5,12 +5,6 @@
 
 SDLProgram::SDLProgram(): window(NULL), renderer(NULL) {};
 
-/**
- * Initialize SDL and SDL_image libraries.
- * Init() also creates an SDL window and a hardware accelerated SDL renderer for that window.
- * 
- * \return true on succes, false on failure
- */
 bool SDLProgram::Init() {
     bool success = true;
 
@@ -49,9 +43,6 @@ bool SDLProgram::Init() {
     return success;
 }
 
-/**
- * Clears currently displayed image
- */
 void SDLProgram::ClearScreen() {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);

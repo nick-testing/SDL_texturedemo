@@ -36,12 +36,35 @@ private:
     LTexture fgAlphaTexture;
     LTexture bgAlphaTexture; 
     
+
+    /**
+     * Renders a texture with color modulation applied
+     * 
+     * \param renderer the rendering context
+     * \param r red color value
+     * \param g green color value
+     * \param b blue color value
+     */
+    void RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b);
+
+    /**
+     * Renders the alpha modulation scene
+     * 
+     * \param renderer the rendering context
+     * \param alpha alpha value used for modulating the texture
+     */
+    void RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha);
+
+    /**
+     * Manually load all textures stored at the ./assets/ directory
+     * 
+     * \todo convert this to automatic loading
+     */
     bool LoadMedia() override;
+
+
     void RenderLoop() override;
     void Close() override;
-
-    void RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b);
-    void RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha);
 };
 
 #endif
