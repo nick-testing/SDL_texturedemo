@@ -9,26 +9,12 @@ static SDL_Rect gSpriteClips[SPRITES_PER_SHEET];
 
 SDLRenderDemo::SDLRenderDemo(): SDLProgram() {};
 
-/**
- * Renders a texture with color modulation applied
- * 
- * \param renderer the rendering context
- * \param r red color value
- * \param g green color value
- * \param b blue color value
- */
 void SDLRenderDemo::RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b) {
     ClearScreen();
     modulatedTexture.SetColor(r, g, b);
     modulatedTexture.Render(renderer, 0, 0);
 }
 
-/**
- * Renders the alpha modulation scene
- * 
- * \param renderer the rendering context
- * \param alpha alpha value used for modulating the texture
- */
 void SDLRenderDemo::RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha) {
     ClearScreen();
     bgAlphaTexture.Render(renderer, 0, 0);
@@ -54,11 +40,6 @@ void SDLRenderDemo::Close() {
     IMG_Quit();
 }
 
-/**
- * Manually load all textures stored at the ./assets/ directory
- * 
- * \todo convert this to automatic loading
- */
 bool SDLRenderDemo::LoadMedia() {
     bool textureLoadSuccess = true;
 

@@ -20,7 +20,17 @@ protected:
     SDL_Window* window;
     SDL_Renderer* renderer;
 
+    /**
+     * Initialize SDL and SDL_image libraries.
+     * Init() also creates an SDL window and a hardware accelerated SDL renderer for that window.
+     * 
+     * \return true on succes, false on failure
+     */
     virtual bool Init();
+
+    /**
+     * Clears currently displayed image
+     */
     virtual void ClearScreen();
 
     virtual void RenderLoop() = 0;

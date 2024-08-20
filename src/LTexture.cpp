@@ -12,13 +12,6 @@ LTexture::~LTexture() {
     Free();
 }
 
-/**
- * Loads texture from received file path
- * 
- * \param renderer the rendering context
- * \param path image file path
- * \return true on successful texture load, false on failure
- */
 bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
     // Free previously held texture
     Free();
@@ -53,15 +46,6 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
     return texture;
 }
 
-/**
- * Sets rendering area at given (x, y) coordinate, renders texture to screen
- * 
- * \param renderer the rendering context
- * \param x the x coordinate of the top left corner
- * \param y the y coordinate of the top left corner
- * \param clip Optional SDL_Rect structre that will serve as a
- *             cropping rectangle for a sprite sheet
- */
 void LTexture::Render(SDL_Renderer* renderer, 
                       int x,
                       int y,
@@ -81,36 +65,14 @@ void LTexture::Render(SDL_Renderer* renderer,
     SDL_RenderCopyEx(renderer, texture, clip, &renderArea, angle, center, flip); 
 }
 
-/**
- * Allows altering the color of rendered texture AKA color modulation
- * Each of color channel value is modulated using the 
- * following formula:
- * `srcC = srcC * (color / 255)`
- * 
- * \param red Red color value in ranges 0x00-0xFF
- * \param green Green color value in ranges 0x00-0xFF
- * \param blue Blue color value in ranges 0x00-0xFF
- */
 void LTexture::SetColor(Uint8 red, Uint8 green, Uint8 blue) {
     SDL_SetTextureColorMod(texture, red, green, blue);
 }
 
-/**
- * Sets the blend mode for the texture
- * 
- * \param blendMode the SDL_BlendMode to use for texture rendering
- */
 void LTexture::SetBlendMode(SDL_BlendMode blendMode) {
     SDL_SetTextureBlendMode(texture, blendMode);
 }
 
-/**
- * Sets the alpha value modifier used for rendering the image
- * Uses the following formula:
- * srcA = srcA * (alpha / 255)
- * 
- * \param alpha the alpha value multipled into the rendering operation
- */
 void LTexture::SetAlpha(Uint8 alpha) {
     SDL_SetTextureAlphaMod(texture, alpha);
 }
@@ -123,9 +85,6 @@ int LTexture::GetHeight() {
     return height;
 }
 
-/**
- * Frees texture if texture exists
- */
 void LTexture::Free() {
     if (texture) {
         SDL_DestroyTexture(texture);
