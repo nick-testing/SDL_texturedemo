@@ -62,7 +62,14 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
  * \param clip Optional SDL_Rect structre that will serve as a
  *             cropping rectangle for a sprite sheet
  */
-void LTexture::Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip) {
+void LTexture::Render(SDL_Renderer* renderer, 
+                      int x,
+                      int y,
+                      SDL_Rect* clip,
+                      double angle, 
+                      SDL_Point* center, 
+                      SDL_RendererFlip flip) {
+                        
     SDL_Rect renderArea = {x, y, width, height};
     
     // Set cropping rectangle dimensions
@@ -71,7 +78,7 @@ void LTexture::Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip) {
         renderArea.h = clip->h;
     }
 
-    SDL_RenderCopy(renderer, texture, clip, &renderArea); 
+    SDL_RenderCopyEx(renderer, texture, clip, &renderArea, angle, center, flip); 
 }
 
 /**

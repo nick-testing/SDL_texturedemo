@@ -1,8 +1,9 @@
 #ifndef LTEXTURE_H
 #define LTEXTURE_H
 
-#include <SDL2/SDL_stdinc.h> // Uint8
+#include <SDL2/SDL_stdinc.h>    // Uint8
 #include <SDL2/SDL_blendmode.h> // SDL_BlendMode
+#include <SDL2/SDL_render.h>    // SDL_RendererFlip
 
 typedef struct SDL_Texture SDL_Texture;
 typedef struct SDL_Renderer SDL_Renderer;
@@ -16,7 +17,13 @@ class LTexture {
 
         bool LoadFromFile(SDL_Renderer* renderer, const char* path);
 
-        void Render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = nullptr);
+        void Render(SDL_Renderer* renderer, 
+                    int x,
+                    int y, 
+                    SDL_Rect* clip = nullptr, 
+                    double angle = 0.0f, 
+                    SDL_Point* center = nullptr, 
+                    SDL_RendererFlip flip = SDL_FLIP_NONE);
 
         void SetColor(Uint8 red, Uint8 green, Uint8 blue);
 
