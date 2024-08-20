@@ -12,7 +12,8 @@ typedef struct SDL_Texture SDL_Texture;
 typedef enum RenderMode {
     RENDER_DEFAULT,
     RENDER_RGB_MODULATION,
-    RENDER_ALPHA_MODULATION
+    RENDER_ALPHA_MODULATION,
+    RENDER_ROTATION
 } RenderMode;
 
 class SDLRenderDemo : SDLProgram {
@@ -35,6 +36,9 @@ private:
     // Alpha blend textures
     LTexture fgAlphaTexture;
     LTexture bgAlphaTexture; 
+
+    // Rotation texture
+    LTexture rotationTexture;
     
 
     /**
