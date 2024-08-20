@@ -3,9 +3,9 @@
 
 int main(int argc, char* argv[]) {
     SDLRenderDemo r;
-    SDLAnimationDemo a;
+    //SDLAnimationDemo a;
     
     r.Run();
-    a.Run();
+    //a.Run();
     return 0;
 }

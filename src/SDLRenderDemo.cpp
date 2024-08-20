@@ -35,6 +35,7 @@ void SDLRenderDemo::Close() {
     modulatedTexture.Free();
     fgAlphaTexture.Free();
     bgAlphaTexture.Free();
+    rotationTexture.Free();
     
     SDL_Quit();
     IMG_Quit();
@@ -90,6 +91,8 @@ bool SDLRenderDemo::LoadMedia() {
     }
     textureLoadSuccess = bgAlphaTexture.LoadFromFile(renderer, "assets/alphafadein.png");
 
+    textureLoadSuccess = rotationTexture.LoadFromFile(renderer, "assets/rotationtexture.png");
+
     return textureLoadSuccess;
 }
 
@@ -106,6 +109,11 @@ void SDLRenderDemo::RenderLoop() {
     Uint8 b = 0xFF;
     // Alpha component
     Uint8 a = 0xFF;
+
+    // Angle of rotation
+    double degrees = 0;
+    // Flip type
+    SDL_RendererFlip flipType = SDL_FLIP_NONE;
 
     // Show main menu
     ClearScreen();
@@ -153,14 +161,28 @@ void SDLRenderDemo::RenderLoop() {
                     
                     // Color modulation
                     case SDLK_F3:
+                        ClearScreen();
                         renderMode = RENDER_RGB_MODULATION;
                         RenderColorModulation(renderer, r, g, b);
                         break;
                     
                     // Alpha modulation
                     case SDLK_F4:
+                        ClearScreen();
                         renderMode = RENDER_ALPHA_MODULATION;
                         RenderAlphaModulation(renderer, a);
+                        break;
+                    
+                    case SDLK_F5:
+                        ClearScreen();
+                        renderMode = RENDER_ROTATION;
+                        rotationTexture.Render(renderer,
+                                               0,
+                                               0,
+                                               NULL,
+                                               degrees,
+                                               nullptr,
+                                               flipType);
                         break;
                     
                     case SDLK_ESCAPE:
@@ -208,6 +230,64 @@ void SDLRenderDemo::RenderLoop() {
                     if (e.key.keysym.sym == SDLK_s) {
                         a = (a - 32 < 0) ? 0 : a - 32;
                         RenderAlphaModulation(renderer, a);
+                    }
+                }
+                else if (RENDER_ROTATION == renderMode) {
+                    switch (e.key.keysym.sym) {
+                        case SDLK_a:
+                            degrees -= 60;
+                            rotationTexture.Render(renderer,
+                                                   0,
+                                                   0,
+                                                   NULL,
+                                                   degrees,
+                                                   nullptr,
+                                                   flipType);
+                            break;
+
+                        case SDLK_d:
+                            degrees += 60;
+                            rotationTexture.Render(renderer,
+                                                   0,
+                                                   0,
+                                                   NULL,
+                                                   degrees,
+                                                   nullptr,
+                                                   flipType);
+                            break;
+
+                        case SDLK_q:
+                            flipType = SDL_FLIP_HORIZONTAL;
+                            rotationTexture.Render(renderer,
+                                                   0,
+                                                   0,
+                                                   NULL,
+                                                   degrees,
+                                                   nullptr,
+                                                   flipType);
+                            break;
+
+                        case SDLK_w:
+                            flipType = SDL_FLIP_NONE;
+                            rotationTexture.Render(renderer,
+                                                   0,
+                                                   0,
+                                                   NULL,
+                                                   degrees,
+                                                   nullptr,
+                                                   flipType);
+                            break;
+
+                        case SDLK_e:
+                            flipType = SDL_FLIP_VERTICAL;
+                            rotationTexture.Render(renderer,
+                                                   0,
+                                                   0,
+                                                   NULL,
+                                                   degrees,
+                                                   nullptr,
+                                                   flipType);
+                            break;
                     }
                 }
             }
