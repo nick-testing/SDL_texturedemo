@@ -8,10 +8,12 @@
 typedef struct SDL_Texture SDL_Texture;
 typedef struct SDL_Renderer SDL_Renderer;
 typedef struct SDL_Rect SDL_rect;
+typedef struct SDL_Color SDL_Color;
+typedef struct _TTF_Font TTF_Font;
 
 class LTexture {
 public:
-    LTexture();
+    LTexture(TTF_Font* font = nullptr);
 
     ~LTexture();
 
@@ -24,6 +26,15 @@ public:
      */
     bool LoadFromFile(SDL_Renderer* renderer, const char* path);
 
+    /**
+     * Creates image from a font string
+     * 
+     * \param renderer the rendering context
+     * \param textureText the text to be rendered
+     * \param textColor the color of the text
+     * \return true on success, false on failure
+     */
+    bool LoadFromRenderedText(SDL_Renderer* renderer, const char* textureText, SDL_Color textColor);
     
     /**
      * Sets rendering area at given (x, y) coordinate, renders texture to screen
@@ -75,10 +86,14 @@ public:
      */
     void Free();
 
+    TTF_Font* GetFont();
+    TTF_Font* SetFont();
+
     int GetWidth();
     int GetHeight();
 private:
     SDL_Texture* texture;
+    TTF_Font* font;
 
     // Image dimensions
     int width;

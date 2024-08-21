@@ -1,12 +1,13 @@
 #include "LTexture.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 
 #define COLOR_CHANNEL_MAX (0xFF)
 #define COLOR_CHANNEL_MIN (0x00)
 
-LTexture::LTexture() : width(0), height(0), texture(nullptr) {}
+LTexture::LTexture(TTF_Font* font) : width(0), height(0), texture(nullptr), font(font) {}
 
 LTexture::~LTexture() {
     Free();
@@ -43,6 +44,28 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
         SDL_FreeSurface(loadedSurface);
     }
     
+    return texture;
+}
+
+bool LTexture::LoadFromRenderedText(SDL_Renderer* renderer, const char* textureText, SDL_Color textColor) {
+    Free();
+
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, textureText, textColor);
+    if (!textSurface) {
+        std::cerr << "Surface creation failed, SDL error: " << SDL_GetError() << std::endl;
+    }
+    else {
+        texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        if (!texture) {
+            std::cerr << "Texture creation failed, SDL error: " << SDL_GetError() << std::endl;
+        }
+        else {
+            width = textSurface->w;
+            height = textSurface->h;
+        }
+        SDL_FreeSurface(textSurface);
+    }
+
     return texture;
 }
 
