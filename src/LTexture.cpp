@@ -7,7 +7,7 @@
 #define COLOR_CHANNEL_MAX (0xFF)
 #define COLOR_CHANNEL_MIN (0x00)
 
-LTexture::LTexture(TTF_Font* font) : width(0), height(0), texture(nullptr), textureFont(font) {}
+LTexture::LTexture() : width(0), height(0), texture(nullptr), textureFont(nullptr) {}
 
 LTexture::~LTexture() {
     Free();
@@ -50,20 +50,28 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
 bool LTexture::LoadFromRenderedText(SDL_Renderer* renderer, const char* textureText, SDL_Color textColor) {
     Free();
 
-    SDL_Surface* textSurface = TTF_RenderText_Solid(textureFont, textureText, textColor);
-    if (!textSurface) {
-        std::cerr << "Surface creation failed, SDL error: " << SDL_GetError() << std::endl;
+    textureFont = TTF_OpenFont("fonts/DejaVuSerif.ttf", 24);
+
+    if (!textureFont) {
+        std::cerr << "Font loading failed, SDL_ttf error: " << std::endl;
     }
+    
     else {
-        texture = SDL_CreateTextureFromSurface(renderer, textSurface);
-        if (!texture) {
-            std::cerr << "Texture creation failed, SDL error: " << SDL_GetError() << std::endl;
+        SDL_Surface* textSurface = TTF_RenderText_Solid(textureFont, textureText, textColor);
+        if (!textSurface) {
+            std::cerr << "Surface creation failed, SDL error: " << SDL_GetError() << std::endl;
         }
         else {
-            width = textSurface->w;
-            height = textSurface->h;
+            texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+            if (!texture) {
+                std::cerr << "Texture creation failed, SDL error: " << SDL_GetError() << std::endl;
+            }
+            else {
+                width = textSurface->w;
+                height = textSurface->h;
+            }
+            SDL_FreeSurface(textSurface);
         }
-        SDL_FreeSurface(textSurface);
     }
 
     return texture;
@@ -76,7 +84,7 @@ void LTexture::Render(SDL_Renderer* renderer,
                       double angle, 
                       SDL_Point* center, 
                       SDL_RendererFlip flip) {
-                        
+
     SDL_Rect renderArea = {x, y, width, height};
     
     // Set cropping rectangle dimensions
@@ -108,10 +116,6 @@ int LTexture::GetHeight() {
     return height;
 }
 
-void LTexture::SetFont(TTF_Font* font) {
-    textureFont = font;
-}
-
 void LTexture::Free() {
     if (texture) {
         SDL_DestroyTexture(texture);
@@ -121,5 +125,6 @@ void LTexture::Free() {
     }
     if (textureFont) {
         TTF_CloseFont(textureFont);
+        textureFont = nullptr;
     }
 }

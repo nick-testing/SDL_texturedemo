@@ -13,7 +13,7 @@ typedef struct _TTF_Font TTF_Font;
 
 class LTexture {
 public:
-    LTexture(TTF_Font* font = nullptr);
+    LTexture();
 
     ~LTexture();
 
@@ -86,11 +86,6 @@ public:
      */
     void Free();
     
-    /**
-     * Sets the desired font
-     */
-    void SetFont(TTF_Font* font);
-
     int GetWidth();
     int GetHeight();
 private:
