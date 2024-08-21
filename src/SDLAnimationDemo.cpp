@@ -10,15 +10,9 @@ static SDL_Rect gSpriteClips[ WALKING_ANIMATION_FRAMES ];
 SDLAnimationDemo::SDLAnimationDemo(): SDLProgram() {};
 
 void SDLAnimationDemo::Close() {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    renderer = nullptr;
-    window = nullptr;
-
     spriteSheetTexture.Free();
             
-    SDL_Quit();
-    IMG_Quit();
+    SDLProgram::Close();
 }
 
 bool SDLAnimationDemo::LoadMedia() {
