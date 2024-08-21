@@ -85,15 +85,17 @@ public:
      * Frees texture if texture exists
      */
     void Free();
-
-    TTF_Font* GetFont();
-    TTF_Font* SetFont();
+    
+    /**
+     * Sets the desired font
+     */
+    void SetFont(TTF_Font* font);
 
     int GetWidth();
     int GetHeight();
 private:
     SDL_Texture* texture;
-    TTF_Font* font;
+    TTF_Font* textureFont;
 
     // Image dimensions
     int width;

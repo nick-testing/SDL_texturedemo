@@ -7,7 +7,7 @@
 #define COLOR_CHANNEL_MAX (0xFF)
 #define COLOR_CHANNEL_MIN (0x00)
 
-LTexture::LTexture(TTF_Font* font) : width(0), height(0), texture(nullptr), font(font) {}
+LTexture::LTexture(TTF_Font* font) : width(0), height(0), texture(nullptr), textureFont(font) {}
 
 LTexture::~LTexture() {
     Free();
@@ -50,7 +50,7 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
 bool LTexture::LoadFromRenderedText(SDL_Renderer* renderer, const char* textureText, SDL_Color textColor) {
     Free();
 
-    SDL_Surface* textSurface = TTF_RenderText_Solid(font, textureText, textColor);
+    SDL_Surface* textSurface = TTF_RenderText_Solid(textureFont, textureText, textColor);
     if (!textSurface) {
         std::cerr << "Surface creation failed, SDL error: " << SDL_GetError() << std::endl;
     }
@@ -108,11 +108,18 @@ int LTexture::GetHeight() {
     return height;
 }
 
+void LTexture::SetFont(TTF_Font* font) {
+    textureFont = font;
+}
+
 void LTexture::Free() {
     if (texture) {
         SDL_DestroyTexture(texture);
         texture = nullptr;
         width = 0;
         height = 0; 
+    }
+    if (textureFont) {
+        TTF_CloseFont(textureFont);
     }
 }
