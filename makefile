@@ -1,6 +1,6 @@
 CC= g++
 CPP_FLAGS= -pedantic
-LINKER_FLAGS= -lSDL2 -lSDL2_image
+LINKER_FLAGS= -lSDL2 -lSDL2_image -lSDL2_ttf
 SRC_DIR= ./src/
 OBJ_NAME= $(SRC_DIR)main.o $(SRC_DIR)SDLRenderDemo.o $(SRC_DIR)LTexture.o $(SRC_DIR)SDLProgram.o $(SRC_DIR)SDLAnimationDemo.o
 OUTPUT= output
