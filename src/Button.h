@@ -4,7 +4,7 @@
 #include <SDL2/SDL_rect.h>  // SDL_Point
 #include "LTexture.h"       // LTexture
 
-typedef union SDL_Event;
+typedef union SDL_Event SDL_Event;
 typedef struct SDL_Renderer SDL_Renderer;
 
 typedef enum {
