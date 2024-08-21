@@ -4,7 +4,8 @@
 #include <SDL2/SDL_rect.h>  // SDL_Point
 #include "LTexture.h"       // LTexture
 
-typedef struct SDL_Event SDL_Event;
+typedef union SDL_Event;
+typedef struct SDL_Renderer SDL_Renderer;
 
 typedef enum {
     BUTTON_SPRITE_MOUSE_OUT,
@@ -35,13 +36,29 @@ public:
 
     /**
      * Draw button sprite on screen
+     * 
+     * \param renderer the rendering context
      */
-    void Render();
+    void Render(SDL_Renderer* renderer);
+
+    /**
+     * Loads desired button texture
+     * 
+     * \param renderer the rendering context
+     * \param path image file path
+     * \return true on success, false otherwise
+     */
+    bool LoadMedia(SDL_Renderer* renderer, const char* path);
+
+    /**
+     * Frees allocated texture
+     */
+    void Free();
 
 private:
     const int BUTTON_WIDTH = 300;
     const int BUTTON_HEIGHT = 200;
-    const int TOTAL_BUTTONS = 4;
+    SDL_Rect spriteClips[BUTTON_SPRITE_TOTAL];
 
     LTexture buttonSpriteSheetTexture;
     

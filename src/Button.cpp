@@ -36,6 +36,43 @@ void Button::HandleEvent(SDL_Event* e) {
                 break;
             }
         }
-
     }
+}
+
+void Button::Render(SDL_Renderer* renderer) {
+    buttonSpriteSheetTexture.Render(renderer, position.x, position.y, &spriteClips[currentSprite]);
+}
+
+bool Button::LoadMedia(SDL_Renderer* renderer, const char* path) {
+    Free();
+    bool loadMediaSuccessful = true;
+    loadMediaSuccessful = buttonSpriteSheetTexture.LoadFromFile(renderer, path);
+
+    if (loadMediaSuccessful) {
+        spriteClips[0].x = 0;
+        spriteClips[0].y = 0;
+        spriteClips[0].w = BUTTON_WIDTH;
+        spriteClips[0].h = BUTTON_HEIGHT;
+
+        spriteClips[1].x = 0;
+        spriteClips[1].y = 200;
+        spriteClips[1].w = BUTTON_WIDTH;
+        spriteClips[1].h = BUTTON_HEIGHT;
+
+        spriteClips[2].x = 0;
+        spriteClips[2].y = 400;
+        spriteClips[2].w = BUTTON_WIDTH;
+        spriteClips[2].h = BUTTON_HEIGHT;
+
+        spriteClips[3].x = 0;
+        spriteClips[3].y = 600;
+        spriteClips[3].w = BUTTON_WIDTH;
+        spriteClips[3].h = BUTTON_HEIGHT;
+    }
+
+    return loadMediaSuccessful;
+}
+
+void Button::Free() {
+    buttonSpriteSheetTexture.Free();
 }
