@@ -1,7 +1,6 @@
 #include "LTexture.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 #include <iostream>
 
 #define COLOR_CHANNEL_MAX (0xFF)
@@ -47,6 +46,7 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
     return texture;
 }
 
+#if defined(SDL_TTF_MAJOR_VERSION)
 bool LTexture::LoadFromRenderedText(SDL_Renderer* renderer, const char* textureText, SDL_Color textColor) {
     Free();
 
@@ -76,6 +76,7 @@ bool LTexture::LoadFromRenderedText(SDL_Renderer* renderer, const char* textureT
 
     return texture;
 }
+#endif
 
 void LTexture::Render(SDL_Renderer* renderer, 
                       int x,
@@ -123,8 +124,11 @@ void LTexture::Free() {
         width = 0;
         height = 0; 
     }
+    
+    #if defined(SDL_TTF_MAJOR_VERSION)
     if (textureFont) {
         TTF_CloseFont(textureFont);
         textureFont = nullptr;
     }
+    #endif
 }

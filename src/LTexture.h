@@ -26,6 +26,7 @@ public:
      */
     bool LoadFromFile(SDL_Renderer* renderer, const char* path);
 
+    #if defined(SDL_TTF_MAJOR_VERSION)
     /**
      * Creates image from a font string
      * 
@@ -35,6 +36,7 @@ public:
      * \return true on success, false on failure
      */
     bool LoadFromRenderedText(SDL_Renderer* renderer, const char* textureText, SDL_Color textColor);
+    #endif
     
     /**
      * Sets rendering area at given (x, y) coordinate, renders texture to screen

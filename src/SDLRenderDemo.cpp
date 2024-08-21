@@ -1,7 +1,6 @@
 #include "SDLRenderDemo.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 #include <iostream>
 
 #define SPRITES_PER_SHEET (4)
@@ -90,8 +89,9 @@ bool SDLRenderDemo::LoadMedia() {
 
     textureLoadSuccess = rotationTexture.LoadFromFile(renderer, "assets/rotationtexture.png");
 
-
-        textureLoadSuccess = fontTexture.LoadFromRenderedText(renderer, "He has the most who is most content with the least.", {0, 0, 0});
+    #if defined(SDL_TTF_MAJOR_VERSION)
+    textureLoadSuccess = fontTexture.LoadFromRenderedText(renderer, "He has the most who is most content with the least.", {0, 0, 0});
+    #endif
 
     return textureLoadSuccess;
 }
@@ -185,6 +185,7 @@ void SDLRenderDemo::RenderLoop() {
                                                flipType);
                         break;
 
+                    #if defined(SDL_TTF_MAJOR_VERSION)
                     case SDLK_F6:
                         renderMode = RENDER_FONT;
                         ClearScreen();
@@ -192,7 +193,7 @@ void SDLRenderDemo::RenderLoop() {
                                            (SCREEN_WIDTH - fontTexture.GetWidth()) / 2,
                                            (SCREEN_HEIGHT - fontTexture.GetHeight()) / 2);
                         break;
-
+                    #endif
                         
                     
                     case SDLK_ESCAPE:
