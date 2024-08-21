@@ -24,11 +24,6 @@ void SDLRenderDemo::RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha) {
 }
 
 void SDLRenderDemo::Close() {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    renderer = nullptr;
-    window = nullptr;
-
     defaultTexture.Free();
     backgroundTexture.Free();
     foregroundTexture.Free();
@@ -40,9 +35,7 @@ void SDLRenderDemo::Close() {
 
     fontTexture.Free();
     
-    TTF_Quit();
-    IMG_Quit();
-    SDL_Quit();
+    SDLProgram::Close();
 }
 
 bool SDLRenderDemo::LoadMedia() {

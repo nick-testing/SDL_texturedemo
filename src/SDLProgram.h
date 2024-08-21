@@ -33,9 +33,13 @@ protected:
      */
     virtual void ClearScreen();
 
+    /**
+     * Deallocate resources and shut down SDL subsystems
+     */
+    virtual void Close();
+
     virtual void RenderLoop() = 0;
     virtual bool LoadMedia() = 0;
-    virtual void Close() = 0;
 };
 
 #endif
