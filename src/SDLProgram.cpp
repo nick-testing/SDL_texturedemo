@@ -53,3 +53,15 @@ void SDLProgram::ClearScreen() {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
 }
+
+void SDLProgram::Close() {
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+
+    window = nullptr;
+    renderer = nullptr;
+
+    TTF_Quit();
+    IMG_Quit();
+    SDL_Quit();
+}
