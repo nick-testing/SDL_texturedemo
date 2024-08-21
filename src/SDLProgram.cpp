@@ -1,6 +1,7 @@
 #include "SDLProgram.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 
 SDLProgram::SDLProgram(): window(NULL), renderer(NULL) {};
@@ -35,6 +36,11 @@ bool SDLProgram::Init() {
                 if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
                     std::cerr << "SDL_Image init failed, SDL error: " << SDL_GetError() << std::endl;
                     success = false;
+                }
+                // Initialize SDL ttf 
+                if (TTF_Init() == -1) {
+                    std::cerr << "SDL_ttf init failed, SDL error: " << SDL_GetError() << std::endl;
+                    success =false;
                 }
             }
         }

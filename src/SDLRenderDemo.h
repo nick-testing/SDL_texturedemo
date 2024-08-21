@@ -13,7 +13,8 @@ typedef enum RenderMode {
     RENDER_DEFAULT,
     RENDER_RGB_MODULATION,
     RENDER_ALPHA_MODULATION,
-    RENDER_ROTATION
+    RENDER_ROTATION,
+    RENDER_FONT
 } RenderMode;
 
 class SDLRenderDemo : SDLProgram {
@@ -37,8 +38,9 @@ private:
     LTexture fgAlphaTexture;
     LTexture bgAlphaTexture; 
 
-    // Rotation texture
     LTexture rotationTexture;
+
+    LTexture fontTexture;
     
 
     /**

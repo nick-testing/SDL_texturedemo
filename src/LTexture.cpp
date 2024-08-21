@@ -1,12 +1,13 @@
 #include "LTexture.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 
 #define COLOR_CHANNEL_MAX (0xFF)
 #define COLOR_CHANNEL_MIN (0x00)
 
-LTexture::LTexture() : width(0), height(0), texture(nullptr) {}
+LTexture::LTexture() : width(0), height(0), texture(nullptr), textureFont(nullptr) {}
 
 LTexture::~LTexture() {
     Free();
@@ -46,6 +47,36 @@ bool LTexture::LoadFromFile(SDL_Renderer* renderer, const char* path) {
     return texture;
 }
 
+bool LTexture::LoadFromRenderedText(SDL_Renderer* renderer, const char* textureText, SDL_Color textColor) {
+    Free();
+
+    textureFont = TTF_OpenFont("fonts/DejaVuSerif.ttf", 24);
+
+    if (!textureFont) {
+        std::cerr << "Font loading failed, SDL_ttf error: " << std::endl;
+    }
+    
+    else {
+        SDL_Surface* textSurface = TTF_RenderText_Solid(textureFont, textureText, textColor);
+        if (!textSurface) {
+            std::cerr << "Surface creation failed, SDL error: " << SDL_GetError() << std::endl;
+        }
+        else {
+            texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+            if (!texture) {
+                std::cerr << "Texture creation failed, SDL error: " << SDL_GetError() << std::endl;
+            }
+            else {
+                width = textSurface->w;
+                height = textSurface->h;
+            }
+            SDL_FreeSurface(textSurface);
+        }
+    }
+
+    return texture;
+}
+
 void LTexture::Render(SDL_Renderer* renderer, 
                       int x,
                       int y,
@@ -53,7 +84,7 @@ void LTexture::Render(SDL_Renderer* renderer,
                       double angle, 
                       SDL_Point* center, 
                       SDL_RendererFlip flip) {
-                        
+
     SDL_Rect renderArea = {x, y, width, height};
     
     // Set cropping rectangle dimensions
@@ -91,5 +122,9 @@ void LTexture::Free() {
         texture = nullptr;
         width = 0;
         height = 0; 
+    }
+    if (textureFont) {
+        TTF_CloseFont(textureFont);
+        textureFont = nullptr;
     }
 }
