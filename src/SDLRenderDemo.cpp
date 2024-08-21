@@ -1,6 +1,7 @@
 #include "SDLRenderDemo.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 
 #define SPRITES_PER_SHEET (4)
@@ -36,9 +37,12 @@ void SDLRenderDemo::Close() {
     fgAlphaTexture.Free();
     bgAlphaTexture.Free();
     rotationTexture.Free();
+
+    fontTexture.Free();
     
-    SDL_Quit();
+    TTF_Quit();
     IMG_Quit();
+    SDL_Quit();
 }
 
 bool SDLRenderDemo::LoadMedia() {
@@ -92,6 +96,9 @@ bool SDLRenderDemo::LoadMedia() {
     textureLoadSuccess = bgAlphaTexture.LoadFromFile(renderer, "assets/alphafadein.png");
 
     textureLoadSuccess = rotationTexture.LoadFromFile(renderer, "assets/rotationtexture.png");
+
+
+        textureLoadSuccess = fontTexture.LoadFromRenderedText(renderer, "He has the most who is most content with the least.", {0, 0, 0});
 
     return textureLoadSuccess;
 }
@@ -161,21 +168,21 @@ void SDLRenderDemo::RenderLoop() {
                     
                     // Color modulation
                     case SDLK_F3:
-                        ClearScreen();
                         renderMode = RENDER_RGB_MODULATION;
+                        ClearScreen();
                         RenderColorModulation(renderer, r, g, b);
                         break;
                     
                     // Alpha modulation
                     case SDLK_F4:
-                        ClearScreen();
                         renderMode = RENDER_ALPHA_MODULATION;
+                        ClearScreen();
                         RenderAlphaModulation(renderer, a);
                         break;
                     
                     case SDLK_F5:
-                        ClearScreen();
                         renderMode = RENDER_ROTATION;
+                        ClearScreen();
                         rotationTexture.Render(renderer,
                                                0,
                                                0,
@@ -184,6 +191,16 @@ void SDLRenderDemo::RenderLoop() {
                                                nullptr,
                                                flipType);
                         break;
+
+                    case SDLK_F6:
+                        renderMode = RENDER_FONT;
+                        ClearScreen();
+                        fontTexture.Render(renderer, 
+                                           (SCREEN_WIDTH - fontTexture.GetWidth()) / 2,
+                                           (SCREEN_HEIGHT - fontTexture.GetHeight()) / 2);
+                        break;
+
+                        
                     
                     case SDLK_ESCAPE:
                         quit = true;
