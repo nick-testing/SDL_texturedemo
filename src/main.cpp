@@ -1,11 +1,14 @@
-#include "SDLRenderDemo.h"
+#include "ButtonDemo.h"
 #include "SDLAnimationDemo.h"
+#include "SDLRenderDemo.h"
 
 int main(int argc, char* argv[]) {
-    SDLRenderDemo r;
-    //SDLAnimationDemo a;
+    ButtonDemo r;
+    SDLAnimationDemo a;
+    SDLRenderDemo d;
     
     r.Run();
-    //a.Run();
+    a.Run();
+    d.Run();
     return 0;
 }
