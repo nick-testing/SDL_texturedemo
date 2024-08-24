@@ -3,26 +3,30 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
+#define DEFAULT_COLOUR (0xFF)
 #define SPRITES_PER_SHEET (4)
 
 static SDL_Rect gSpriteClips[SPRITES_PER_SHEET];
 
-SDLRenderDemo::SDLRenderDemo(): SDLProgram() {};
+SDLRenderDemo::SDLRenderDemo(): SDLProgram() {}
 
-void SDLRenderDemo::RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b) {
+void SDLRenderDemo::RenderColorModulation(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b) 
+{
     ClearScreen();
     modulatedTexture.SetColor(r, g, b);
     modulatedTexture.Render(renderer, 0, 0);
 }
 
-void SDLRenderDemo::RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha) {
+void SDLRenderDemo::RenderAlphaModulation(SDL_Renderer* renderer, Uint8 alpha) 
+{
     ClearScreen();
     bgAlphaTexture.Render(renderer, 0, 0);
     fgAlphaTexture.SetAlpha(alpha);
     fgAlphaTexture.Render(renderer, 0, 0);
 }
 
-void SDLRenderDemo::Close() {
+void SDLRenderDemo::Close() 
+{
     defaultTexture.Free();
     backgroundTexture.Free();
     foregroundTexture.Free();
@@ -37,7 +41,8 @@ void SDLRenderDemo::Close() {
     SDLProgram::Close();
 }
 
-bool SDLRenderDemo::LoadMedia() {
+bool SDLRenderDemo::LoadMedia() 
+{
     bool textureLoadSuccess = true;
 
     // Load default texture
@@ -51,7 +56,8 @@ bool SDLRenderDemo::LoadMedia() {
 
     textureLoadSuccess = spriteSheetTexture.LoadFromFile(renderer, "assets/samplespritesheet.png");
     
-    if (textureLoadSuccess) {
+    if (textureLoadSuccess) 
+    {
         // Top left sprite
         gSpriteClips[0].x = 0;
         gSpriteClips[0].y = 0;
@@ -82,7 +88,8 @@ bool SDLRenderDemo::LoadMedia() {
     
     // Load alpha blend textures
     textureLoadSuccess = fgAlphaTexture.LoadFromFile(renderer, "assets/alphafadeout.png");
-    if(textureLoadSuccess) {
+    if (textureLoadSuccess) 
+    {
         fgAlphaTexture.SetBlendMode(SDL_BLENDMODE_BLEND);
     }
     textureLoadSuccess = bgAlphaTexture.LoadFromFile(renderer, "assets/alphafadein.png");
@@ -96,7 +103,8 @@ bool SDLRenderDemo::LoadMedia() {
     return textureLoadSuccess;
 }
 
-void SDLRenderDemo::RenderLoop() {
+void SDLRenderDemo::RenderLoop() 
+{
     bool quit = false;
     SDL_Event e;
 
@@ -104,14 +112,14 @@ void SDLRenderDemo::RenderLoop() {
     RenderMode renderMode = RENDER_DEFAULT;
 
     // Modulation componenets
-    Uint8 r = 0xFF;
-    Uint8 g = 0xFF;
-    Uint8 b = 0xFF;
+    Uint8 r = DEFAULT_COLOUR;
+    Uint8 g = DEFAULT_COLOUR;
+    Uint8 b = DEFAULT_COLOUR;
     // Alpha component
-    Uint8 a = 0xFF;
+    Uint8 a = DEFAULT_COLOUR;
 
     // Angle of rotation
-    double degrees = 0;
+    double degrees = 0.0f;
     // Flip type
     SDL_RendererFlip flipType = SDL_FLIP_NONE;
 
@@ -119,14 +127,19 @@ void SDLRenderDemo::RenderLoop() {
     ClearScreen();
     defaultTexture.Render(renderer, 0, 0);
 
-    while (!quit) {
-        while (SDL_PollEvent(&e) != 0) {
-            if (SDL_QUIT == e.type) {
+    while (!quit) 
+    {
+        while (SDL_PollEvent(&e) != 0) 
+        {
+            if (SDL_QUIT == e.type) 
+            {
                 quit = true;
             }
             // Input handling
-            else if(SDL_KEYDOWN == e.type) {
-                switch (e.key.keysym.sym) {
+            else if(SDL_KEYDOWN == e.type) 
+            {
+                switch (e.key.keysym.sym) 
+                {
                     // Render static texture
                     case SDLK_F1:
                         renderMode = RENDER_DEFAULT;
@@ -200,8 +213,10 @@ void SDLRenderDemo::RenderLoop() {
                         quit = true;
                 }
 
-                if (RENDER_RGB_MODULATION == renderMode) {
-                    switch (e.key.keysym.sym) {
+                if (RENDER_RGB_MODULATION == renderMode) 
+                {
+                    switch (e.key.keysym.sym) 
+                    {
                         case SDLK_q:
                             r += 32;
                             RenderColorModulation(renderer, r, g, b);
@@ -233,18 +248,23 @@ void SDLRenderDemo::RenderLoop() {
                             break;
                     }
                 }
-                else if (RENDER_ALPHA_MODULATION == renderMode) {
-                    if (e.key.keysym.sym == SDLK_w) {
+                else if (RENDER_ALPHA_MODULATION == renderMode) 
+                {
+                    if (e.key.keysym.sym == SDLK_w) 
+                    {
                         a = (a + 32 > 255) ? 255 : a + 32;
                         RenderAlphaModulation(renderer, a);
                     }
-                    if (e.key.keysym.sym == SDLK_s) {
+                    if (e.key.keysym.sym == SDLK_s) 
+                    {
                         a = (a - 32 < 0) ? 0 : a - 32;
                         RenderAlphaModulation(renderer, a);
                     }
                 }
-                else if (RENDER_ROTATION == renderMode) {
-                    switch (e.key.keysym.sym) {
+                else if (RENDER_ROTATION == renderMode) 
+                {
+                    switch (e.key.keysym.sym) 
+                    {
                         case SDLK_a:
                             degrees -= 60;
                             rotationTexture.Render(renderer,
@@ -308,8 +328,10 @@ void SDLRenderDemo::RenderLoop() {
     }
 }
 
-void SDLRenderDemo::Run() {
-    if (Init()) {
+void SDLRenderDemo::Run() 
+{
+    if (Init()) 
+    {
         LoadMedia();
         RenderLoop();
     }

@@ -9,17 +9,20 @@ static SDL_Rect gSpriteClips[ WALKING_ANIMATION_FRAMES ];
 
 SDLAnimationDemo::SDLAnimationDemo(): SDLProgram() {};
 
-void SDLAnimationDemo::Close() {
+void SDLAnimationDemo::Close() 
+{
     spriteSheetTexture.Free();
             
     SDLProgram::Close();
 }
 
-bool SDLAnimationDemo::LoadMedia() {
+bool SDLAnimationDemo::LoadMedia() 
+{
     bool loadMediaSuccessful = true;
     loadMediaSuccessful = spriteSheetTexture.LoadFromFile(renderer, "assets/animationsheet.png");
 
-    if (loadMediaSuccessful) {
+    if (loadMediaSuccessful) 
+    {
         gSpriteClips[0].x = 0;
         gSpriteClips[0].y = 0;
         gSpriteClips[0].w = 100;
@@ -44,16 +47,20 @@ bool SDLAnimationDemo::LoadMedia() {
     return loadMediaSuccessful;
 }
 
-void SDLAnimationDemo::RenderLoop() {
+void SDLAnimationDemo::RenderLoop() 
+{
     bool quit = false;
     SDL_Event e;
 
     // Holds current animation frame
     int frame = 0;
 
-    while (!quit) {
-        while (SDL_PollEvent(&e)) {
-            if (SDL_QUIT == e.type || SDLK_ESCAPE == e.key.keysym.sym) {
+    while (!quit) 
+    {
+        while (SDL_PollEvent(&e)) 
+        {
+            if (SDL_QUIT == e.type || SDLK_ESCAPE == e.key.keysym.sym) 
+            {
                 quit = true;
             }
         }
@@ -74,8 +81,10 @@ void SDLAnimationDemo::RenderLoop() {
 
 }
 
-void SDLAnimationDemo::Run() {
-    if (Init()) {
+void SDLAnimationDemo::Run() 
+{
+    if (Init()) 
+    {
         LoadMedia();
         RenderLoop();
     }
