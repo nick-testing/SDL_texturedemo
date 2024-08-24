@@ -8,38 +8,39 @@ typedef struct SDL_Window SDL_Window;
 typedef struct SDL_Renderer SDL_Renderer;
 typedef struct SDL_Texture SDL_Texture;
 
-class SDLProgram {
-public:
-    SDLProgram();
-    virtual void Run() = 0;
+class SDLProgram 
+{
+    public:
+        SDLProgram();
+        virtual void Run() = 0;
 
-protected:
-    static const int SCREEN_HEIGHT = 600;
-    static const int SCREEN_WIDTH = 800;
+    protected:
+        static const int SCREEN_HEIGHT = 600;
+        static const int SCREEN_WIDTH = 800;
 
-    SDL_Window* window;
-    SDL_Renderer* renderer;
+        SDL_Window* window;
+        SDL_Renderer* renderer;
 
-    /**
-     * Initialize SDL and SDL_image libraries.
-     * Init() also creates an SDL window and a hardware accelerated SDL renderer for that window.
-     * 
-     * \return true on succes, false on failure
-     */
-    virtual bool Init();
+        /**
+         * @brief SDL and SDL_image libraries.
+         * Init() also creates an SDL window and a hardware accelerated SDL renderer for that window.
+         * 
+         * @return true on succes, false on failure
+         */
+        virtual bool Init();
 
-    /**
-     * Clears currently displayed image
-     */
-    virtual void ClearScreen();
+        /**
+         * @brief Clears currently displayed image
+         */
+        virtual void ClearScreen();
 
-    /**
-     * Deallocate resources and shut down SDL subsystems
-     */
-    virtual void Close();
+        /**
+         * @brief Deallocate resources and shut down SDL subsystems
+         */
+        virtual void Close();
 
-    virtual void RenderLoop() = 0;
-    virtual bool LoadMedia() = 0;
+        virtual void RenderLoop() = 0;
+        virtual bool LoadMedia() = 0;
 };
 
 #endif

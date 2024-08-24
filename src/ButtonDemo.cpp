@@ -3,10 +3,12 @@
 
 ButtonDemo::ButtonDemo() : SDLProgram() {}
 
-bool ButtonDemo::LoadMedia() {
+bool ButtonDemo::LoadMedia() 
+{
     bool loadSuccessful = true;
 
-    for (int i = 0; i < BUTTON_SPRITE_TOTAL; ++i) {
+    for (int i = 0; i < BUTTON_SPRITE_TOTAL; ++i) 
+    {
         loadSuccessful = buttons[i].LoadMedia(renderer, "assets/button.png");
     }
     buttons[1].SetPosition(300,0);
@@ -16,22 +18,28 @@ bool ButtonDemo::LoadMedia() {
     return loadSuccessful;
 }
 
-void ButtonDemo::RenderLoop() {
+void ButtonDemo::RenderLoop() 
+{
     bool quit = false;
     SDL_Event e;
 
-    while (!quit) {
-        while(SDL_PollEvent(&e)) {
-            if (SDL_QUIT == e.type) {
+    while (!quit) 
+    {
+        while(SDL_PollEvent(&e)) 
+        {
+            if (SDL_QUIT == e.type) 
+            {
                 quit = true;
             }
-            for (int i = 0; i < BUTTON_SPRITE_TOTAL; ++i) {
+            for (int i = 0; i < BUTTON_SPRITE_TOTAL; ++i) 
+            {
                 buttons[i].HandleEvent(&e);
             }
         }
 
         ClearScreen();
-        for (int i = 0; i < BUTTON_SPRITE_TOTAL; ++i) {
+        for (int i = 0; i < BUTTON_SPRITE_TOTAL; ++i) 
+        {
             buttons[i].Render(renderer);
         }
 
@@ -39,15 +47,19 @@ void ButtonDemo::RenderLoop() {
     }
 }
 
-void ButtonDemo::Close() {
-    for (int i = 0; i < BUTTON_SPRITE_TOTAL; ++i) {
+void ButtonDemo::Close() 
+{
+    for (int i = 0; i < BUTTON_SPRITE_TOTAL; ++i) 
+    {
         buttons[i].Free();
     }
     SDLProgram::Close();
 }
 
-void ButtonDemo::Run() {
-    if(Init()) {
+void ButtonDemo::Run() 
+{
+    if(Init()) 
+    {
         LoadMedia();
         RenderLoop();
     }
