@@ -58,7 +58,7 @@ void ButtonDemo::Close()
 
 void ButtonDemo::Run() 
 {
-    if(Init()) 
+    if (Init()) 
     {
         LoadMedia();
         RenderLoop();
