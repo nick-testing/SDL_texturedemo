@@ -28,7 +28,7 @@ all: $(SRC_DIR)/$(MAIN_SRC) $(GENERAL_OBJ) button animation render
 	$(CC) $(CPP_FLAGS) $< $(BUILD_DIR)/*.o -o $(OUTPUT_DIR)/$(OUTPUT_BIN) $(LINKER_FLAGS)
 
 debug: $(SRC_DIR)/$(MAIN_SRC) $(GENERAL_OBJ) button animation render
-	$(CC) $(CPP_FLAGS) $< $(BUILD_DIR)/*.o -o $(OUTPUT_DIR)/$(DEBUG_BIN) $(LINKER_FLAGS)
+	$(CC) $(CPP_FLAGS) $(DEBUG_FLAGS) $< $(BUILD_DIR)/*.o -o $(OUTPUT_DIR)/$(DEBUG_BIN) $(LINKER_FLAGS)
 
 button: $(BUTTON_OBJ)
 
