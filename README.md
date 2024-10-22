@@ -23,12 +23,6 @@ Run <code>make clean</code> to remove the compiled files
 
 
 #### Design
-The program consists of a parent SDLProgram class which contains a general SDL initialization and display clearing function.
-
-The child class SDLRenderDemo inherits SDLProgram and implements all of the pure virtual functions to create a functioning program.
-
-SDLRender is a wrapper class for the SDL_Renderer struct and offers various rendering functions.
-
 The current UML design document:
 
 ![The design sheet](/misc/design.png)
