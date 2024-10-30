@@ -1,4 +1,0 @@
-[submodule "lib"]
-	path = lib
-	url = https://github.com/libsdl-org/SDL.git
-	branch = SDL2
